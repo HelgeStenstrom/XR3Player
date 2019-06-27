@@ -3,6 +3,7 @@
  */
 package com.goxr3plus.xr3player.xplayer.visualizer.geometry;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import com.goxr3plus.xr3player.xplayer.visualizer.core.VisualizerDrawer;
 
@@ -93,33 +94,37 @@ public class Oscilloscope {
 		// Background
 		visualizerDrawer.drawBackgroundImage();
 
-		visualizerDrawer.gc.setStroke(visualizerDrawer.getScopeColor());
+		final GraphicsContext graphicsContext = visualizerDrawer.gc;
+
+		graphicsContext.setStroke(visualizerDrawer.getScopeColor());
 		// System.out.println(pSample.length)
 
-		int yLast1 = (int) (pSample1[0] * (float) visualizerDrawer.getHalfCanvasHeight())
-				+ visualizerDrawer.getHalfCanvasHeight();
+		final int halfCanvasHeight = visualizerDrawer.getHalfCanvasHeight();
+		int yLast1 = (int) (pSample1[0] * (float) halfCanvasHeight)
+				+ halfCanvasHeight;
 		int samIncrement1 = 1;
-		for (int a = samIncrement1, c = 0; c < visualizerDrawer.getCanvasWidth(); a += samIncrement1, c++) {
-			int yNow = (int) (pSample1[a] * (float) visualizerDrawer.getHalfCanvasHeight())
-					+ visualizerDrawer.getHalfCanvasHeight();
-			visualizerDrawer.gc.strokeLine(c, yLast1, c + 1.00, yNow);
+		final int canvasWidth = visualizerDrawer.getCanvasWidth();
+		for (int a = samIncrement1, c = 0; c < canvasWidth; a += samIncrement1, c++) {
+			int yNow = (int) (pSample1[a] * (float) halfCanvasHeight)
+					+ halfCanvasHeight;
+			graphicsContext.strokeLine(c, yLast1, c + 1.00, yNow);
 			yLast1 = yNow;
 		}
 
 		// Oscilloscope will be stereo
 		if (stereo) {
 			colorIndex = (colorIndex == colorSize - 1) ? 0 : colorIndex + 1;
-			visualizerDrawer.gc.setStroke(Color.hsb(colorIndex, 1.0f, 1.0f));
+			graphicsContext.setStroke(Color.hsb(colorIndex, 1.0f, 1.0f));
 
 			float[] pSample2 = visualizerDrawer.getpRightChannel();
 
-			int yLast2 = (int) (pSample2[0] * (float) visualizerDrawer.getHalfCanvasHeight())
-					+ visualizerDrawer.getHalfCanvasHeight();
+			int yLast2 = (int) (pSample2[0] * (float) halfCanvasHeight)
+					+ halfCanvasHeight;
 			int samIncrement2 = 1;
-			for (int a = samIncrement2, c = 0; c < visualizerDrawer.getCanvasWidth(); a += samIncrement2, c++) {
-				int yNow = (int) (pSample2[a] * (float) visualizerDrawer.getHalfCanvasHeight())
-						+ visualizerDrawer.getHalfCanvasHeight();
-				visualizerDrawer.gc.strokeLine(c, yLast2, c + 1.00, yNow);
+			for (int a = samIncrement2, c = 0; c < canvasWidth; a += samIncrement2, c++) {
+				int yNow = (int) (pSample2[a] * (float) halfCanvasHeight)
+						+ halfCanvasHeight;
+				graphicsContext.strokeLine(c, yLast2, c + 1.00, yNow);
 				yLast2 = yNow;
 			}
 
