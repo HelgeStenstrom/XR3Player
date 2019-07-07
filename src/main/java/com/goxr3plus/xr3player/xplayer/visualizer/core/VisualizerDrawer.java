@@ -21,7 +21,7 @@ import com.goxr3plus.xr3player.utils.general.InfoTool;
  */
 public class VisualizerDrawer extends VisualizerModel {
 
-	private final Oscilloscope oscilloscope = new Oscilloscope(this);
+//	private final Oscilloscope oscilloscope = new Oscilloscope(this);
 	private Polyspiral polySpiral = new Polyspiral(this);
 	protected final Sierpinski sierpinski = new Sierpinski(this);
 	private final JuliaSet juliaSet = new JuliaSet(this);
@@ -119,22 +119,22 @@ public class VisualizerDrawer extends VisualizerModel {
 	 * -----------------------------------------------------------------------
 	 */
 
-	/**
-	 * Draws an Oscilloscope
-	 * 
-	 * @param stereo The Oscilloscope with have 2 lines->stereo or 1 line->merge
-	 *               left and right audio
-	 */
-	public void drawOscilloscope(boolean stereo) {
-		oscilloscope.drawOscilloscope(stereo);
-	}
-
-	/**
-	 * Draws an Oscilloscope with up and down Lines
-	 */
-	public void drawOscilloScopeLines() {
-		oscilloscope.drawOscilloScopeLines();
-	}
+//	/**
+//	 * Draws an Oscilloscope
+//	 *
+//	 * @param stereo The Oscilloscope with have 2 lines->stereo or 1 line->merge
+//	 *               left and right audio
+//	 */
+//	public void drawOscilloscope(boolean stereo) {
+//		oscilloscope.drawOscilloscope(stereo);
+//	}
+//
+//	/**
+//	 * Draws an Oscilloscope with up and down Lines
+//	 */
+//	public void drawOscilloScopeLines() {
+//		oscilloscope.drawOscilloScopeLines();
+//	}
 
 	/*-----------------------------------------------------------------------
 	 * 

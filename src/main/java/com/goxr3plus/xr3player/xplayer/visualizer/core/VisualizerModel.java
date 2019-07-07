@@ -20,7 +20,7 @@ import com.goxr3plus.xr3player.xplayer.visualizer.geometry.ResizableCanvas;
  *
  * @author GOXR3PLUS
  */
-public class VisualizerModel extends ResizableCanvas implements KJDigitalSignalProcessor {
+public abstract class VisualizerModel extends ResizableCanvas implements KJDigitalSignalProcessor {
 
 	/** The Constant log. */
 	private static final Logger logger = Logger.getLogger(VisualizerModel.class.getName());
@@ -162,7 +162,7 @@ public class VisualizerModel extends ResizableCanvas implements KJDigitalSignalP
 
 	/** The frames per second. */
 	// -- FPS calculations.
-	protected int framesPerSecond;
+	public int framesPerSecond;
 
 	/** The fps. */
 	private int fps = DEFAULT_FPS;
