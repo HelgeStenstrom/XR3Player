@@ -3,7 +3,11 @@ package com.goxr3plus.xr3player.xplayer.visualizer.presenter;
 import com.goxr3plus.xr3player.application.Main;
 import com.goxr3plus.xr3player.controllers.xplayer.GadgetOwner;
 import com.goxr3plus.xr3player.controllers.xplayer.XPlayerController;
+import com.goxr3plus.xr3player.xplayer.visualizer.geometry.JuliaSet;
 import com.goxr3plus.xr3player.xplayer.visualizer.geometry.Oscilloscope;
+import com.goxr3plus.xr3player.xplayer.visualizer.geometry.Polyspiral;
+import com.goxr3plus.xr3player.xplayer.visualizer.geometry.Sierpinski;
+import com.goxr3plus.xr3player.xplayer.visualizer.geometry.Sprites3D;
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Orientation;
@@ -49,8 +53,23 @@ public class PaintService extends AnimationTimer {
 
     public PaintService(Visualizer visualizer) {
         this.visualizer = visualizer;
-        final Oscilloscope oscilloscope = new Oscilloscope(visualizer);
-        gadgetOwner = new GadgetOwner(oscilloscope);
+        gadgetOwner = getGadgetOwner(visualizer); // TODO: Inject this value instead.
+
+    }
+
+    private GadgetOwner getGadgetOwner(Visualizer visualizer) {
+        final Sierpinski sierpinski = new Sierpinski(visualizer);
+        // TODO: replace hard-coded value with the correct canvas height.
+        // The visualizer canvas height is 0 at this stage.
+        sierpinski.sierpinskiRootHeight = 287; //visualizer.getCanvasHeight();
+
+        return new GadgetOwner.Builder()
+                .setOscilloscope(new Oscilloscope(visualizer))
+                .setPolyspiral(new Polyspiral(visualizer))
+                .setSierpinski(sierpinski)
+                .setSprites3D(new Sprites3D(visualizer, Sprites3D.Shape3D.SPHERE))
+                .setJuliaSet(new JuliaSet(visualizer))
+                .build();
     }
 
     @Override
@@ -194,23 +213,23 @@ public class PaintService extends AnimationTimer {
                 visualizer.drawVUMeter(Orientation.HORIZONTAL);
                 break;
             case 5:
-                visualizer.drawPolySpiral();
+                gadgetOwner.drawPolySpiral();
                 break;
             case 6:
                 visualizer.drawCircleWithLines();
                 break;
             case 7:
-                visualizer.drawSierpinski();
+                gadgetOwner.drawSierpinski();
                 break;
             case 8:
-                visualizer.drawSprite3D();
+                gadgetOwner.drawSprite3D();
                 break;
             case 9:
                 visualizer.drawVUMeter(Orientation.VERTICAL);
 
                 break;
             case 10:
-                visualizer.drawJuliaSet();
+                gadgetOwner.drawJuliaSet();
                 break;
             default:
                 break;

@@ -3,16 +3,10 @@
  */
 package com.goxr3plus.xr3player.xplayer.visualizer.core;
 
+import com.goxr3plus.xr3player.utils.general.InfoTool;
 import javafx.geometry.Orientation;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import com.goxr3plus.xr3player.xplayer.visualizer.geometry.JuliaSet;
-import com.goxr3plus.xr3player.xplayer.visualizer.geometry.Oscilloscope;
-import com.goxr3plus.xr3player.xplayer.visualizer.geometry.Polyspiral;
-import com.goxr3plus.xr3player.xplayer.visualizer.geometry.Sierpinski;
-import com.goxr3plus.xr3player.xplayer.visualizer.geometry.Sprites3D;
-import com.goxr3plus.xr3player.xplayer.visualizer.geometry.Sprites3D.Shape3D;
-import com.goxr3plus.xr3player.utils.general.InfoTool;
 
 /**
  * The Class VisualizerDrawer.
@@ -21,11 +15,6 @@ import com.goxr3plus.xr3player.utils.general.InfoTool;
  */
 public class VisualizerDrawer extends VisualizerModel {
 
-//	private final Oscilloscope oscilloscope = new Oscilloscope(this);
-	private Polyspiral polySpiral = new Polyspiral(this);
-	protected final Sierpinski sierpinski = new Sierpinski(this);
-	private final JuliaSet juliaSet = new JuliaSet(this);
-	private Sprites3D sprite3D = new Sprites3D(this, Shape3D.SPHERE);
 
 	// -----------------------------Images---------------------------------
 
@@ -105,75 +94,6 @@ public class VisualizerDrawer extends VisualizerModel {
 		}
 	}
 
-	// ---------------------------------------------------------------------
-
-	/*-----------------------------------------------------------------------
-	 * 
-	 * -----------------------------------------------------------------------
-	 * 
-	 * 
-	 * 			        Oscilloscope
-	 * 
-	 * -----------------------------------------------------------------------
-	 * 
-	 * -----------------------------------------------------------------------
-	 */
-
-//	/**
-//	 * Draws an Oscilloscope
-//	 *
-//	 * @param stereo The Oscilloscope with have 2 lines->stereo or 1 line->merge
-//	 *               left and right audio
-//	 */
-//	public void drawOscilloscope(boolean stereo) {
-//		oscilloscope.drawOscilloscope(stereo);
-//	}
-//
-//	/**
-//	 * Draws an Oscilloscope with up and down Lines
-//	 */
-//	public void drawOscilloScopeLines() {
-//		oscilloscope.drawOscilloScopeLines();
-//	}
-
-	/*-----------------------------------------------------------------------
-	 * 
-	 * -----------------------------------------------------------------------
-	 * 
-	 * 
-	 * 				Rosette and Polyspiral
-	 * 
-	 * -----------------------------------------------------------------------
-	 * 
-	 * -----------------------------------------------------------------------
-	 */
-
-	/**
-	 * Draws a Rosette and a Polyspiral.
-	 */
-	public void drawPolySpiral() {
-		polySpiral.drawPolySpiral();
-
-	}
-
-	/*-----------------------------------------------------------------------
-	 * 
-	 * -----------------------------------------------------------------------
-	 * 
-	 * 
-	 * 				Sprite3D
-	 * 
-	 * -----------------------------------------------------------------------
-	 * 
-	 * -----------------------------------------------------------------------
-	 */
-
-	/**
-	 * Draws a 3D Sprite
-	 */
-	public void drawSprite3D() {
-		sprite3D.draw();
-	}
 
 	/*-----------------------------------------------------------------------
 	 * 
@@ -479,42 +399,5 @@ public class VisualizerDrawer extends VisualizerModel {
 		}
 	}
 
-	/*-----------------------------------------------------------------------
-	 * 
-	 * -----------------------------------------------------------------------
-	 * 
-	 * 
-	 * 						    Sierpinski
-	 * 
-	 * -----------------------------------------------------------------------
-	 * 
-	 * -----------------------------------------------------------------------
-	 */
-
-	/**
-	 * Draws the Sierpinski Triangles.
-	 */
-	public void drawSierpinski() {
-		sierpinski.drawSierpinski();
-	}
-
-	/*-----------------------------------------------------------------------
-	 * 
-	 * -----------------------------------------------------------------------
-	 * 
-	 * 
-	 * 						    Julia Fractals
-	 * 
-	 * -----------------------------------------------------------------------
-	 * 
-	 * -----------------------------------------------------------------------
-	 */
-
-	/**
-	 * Draws the Julia Set
-	 */
-	public void drawJuliaSet() {
-		juliaSet.drawJuliaSet();
-	}
 
 }

@@ -15,10 +15,20 @@ import com.goxr3plus.xr3player.xplayer.visualizer.geometry.Sprites3D;
  */
 public class GadgetOwner {
     private final Oscilloscope oscilloscope;
+    private final Polyspiral polyspiral;
+    private final Sierpinski sierpinski;
+    private final Sprites3D sprites3D;
+    private final JuliaSet juliaSet;
 
-    public GadgetOwner(Oscilloscope oscilloscope) {
-        this.oscilloscope = oscilloscope;
+
+    GadgetOwner(Builder builder) {
+        this.oscilloscope = builder.oscilloscope;
+        this.polyspiral = builder.polyspiral;
+        this.sierpinski = builder.sierpinski;
+        this.sprites3D = builder.sprites3D;
+        this.juliaSet = builder.juliaSet;
     }
+
 
     /**
      * Draws an Oscilloscope
@@ -30,10 +40,76 @@ public class GadgetOwner {
         oscilloscope.drawOscilloscope(stereo);
     }
 
+    public void drawPolySpiral() {
+        polyspiral.drawPolySpiral();
+    }
+
+    /**
+     * Draws the Sierpinski Triangles.
+     */
+    public void drawSierpinski() {
+        sierpinski.drawSierpinski();
+    }
+
+    /**
+     * Draws a 3D Sprite
+     */
+    public void drawSprite3D() {
+        sprites3D.draw();
+    }
+
+    /**
+     * Draws the Julia Set
+     */
+    public void drawJuliaSet() {
+        juliaSet.drawJuliaSet();
+    }
+
     /**
      * Draws an Oscilloscope with up and down Lines
      */
     public void drawOscilloScopeLines() {
         oscilloscope.drawOscilloScopeLines();
+    }
+
+    public static class Builder {
+        private Oscilloscope oscilloscope;
+        private Polyspiral polyspiral;
+        private Sierpinski sierpinski;
+        private Sprites3D sprites3D;
+
+        private JuliaSet juliaSet;
+
+
+        public GadgetOwner build() {
+            return new GadgetOwner(this);
+        }
+
+        public Builder setOscilloscope(Oscilloscope oscilloscope) {
+            this.oscilloscope = oscilloscope;
+            return this;
+        }
+
+        public Builder setPolyspiral(Polyspiral polyspiral) {
+            this.polyspiral = polyspiral;
+            return this;
+        }
+
+        public Builder setSierpinski(Sierpinski sierpinski) {
+            this.sierpinski = sierpinski;
+            return this;
+        }
+
+        public Builder setSprites3D(Sprites3D sprites3D) {
+            this.sprites3D = sprites3D;
+            return this;
+        }
+
+        public Builder setJuliaSet(JuliaSet juliaSet) {
+            this.juliaSet = juliaSet;
+            return this;
+        }
+
+
     }
 }

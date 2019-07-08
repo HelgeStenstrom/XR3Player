@@ -46,7 +46,8 @@ abstract class Visualizer extends VisualizerDrawer {
 			setHalfCanvasHeight(getCanvasHeight() >> 1);
 
 			// Sierpinski
-			sierpinski.sierpinskiRootHeight = getCanvasHeight();
+			//sierpinski.sierpinskiRootHeight = getCanvasHeight();
+			System.out.println(("Canvas height right now: " + getCanvasHeight()));
 
 			// Compute the Color Scale
 			computeColorScale();
