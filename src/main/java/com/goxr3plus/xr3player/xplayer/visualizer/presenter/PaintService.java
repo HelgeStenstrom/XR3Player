@@ -1,7 +1,9 @@
 package com.goxr3plus.xr3player.xplayer.visualizer.presenter;
 
 import com.goxr3plus.xr3player.application.Main;
+import com.goxr3plus.xr3player.controllers.xplayer.GadgetOwner;
 import com.goxr3plus.xr3player.controllers.xplayer.XPlayerController;
+import com.goxr3plus.xr3player.xplayer.visualizer.geometry.Oscilloscope;
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Orientation;
@@ -43,9 +45,12 @@ public class PaintService extends AnimationTimer {
     private long previousTime = 0;
     private float secondsElapsedSinceLastFpsUpdate = 0f;
     private int framesSinceLastFpsUpdate = 0;
+    private final GadgetOwner gadgetOwner;
 
     public PaintService(Visualizer visualizer) {
         this.visualizer = visualizer;
+        final Oscilloscope oscilloscope = new Oscilloscope(visualizer);
+        gadgetOwner = new GadgetOwner(oscilloscope);
     }
 
     @Override
@@ -174,13 +179,13 @@ public class PaintService extends AnimationTimer {
             switch (visualizer.displayMode.get()) {
 
             case 0:
-            //	drawOscilloscope(false);
+                gadgetOwner.drawOscilloscope(false);
                 break;
             case 1:
-            //	drawOscilloscope(true);
+                gadgetOwner.drawOscilloscope(true);
                 break;
             case 2:
-            //	drawOscilloScopeLines();
+                gadgetOwner.drawOscilloScopeLines();
                 break;
             case 3:
                 visualizer.drawSpectrumBars();
