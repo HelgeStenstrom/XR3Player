@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.SplitPane;
@@ -63,10 +64,10 @@ public class PlayListModesSplitPane extends BorderPane {
 
 		// == splitPane
 		splitPane.getItems().clear();
-		splitPane.getItems().addAll(Main.treeManager, Main.playListModesTabPane, Main.mediaInformation);
+		splitPane.getItems().addAll(MainLoader.getTreeManager(), Main.playListModesTabPane, MainLoader.getMediaInformation());
 		SplitPane.setResizableWithParent(Main.playListModesTabPane, Boolean.FALSE);
-		SplitPane.setResizableWithParent(Main.mediaInformation, Boolean.FALSE);
-		SplitPane.setResizableWithParent(Main.treeManager, Boolean.FALSE);
+		SplitPane.setResizableWithParent(MainLoader.getMediaInformation(), Boolean.FALSE);
+		SplitPane.setResizableWithParent(MainLoader.getTreeManager(), Boolean.FALSE);
 		updateSplitPaneDivider();
 	}
 
@@ -93,10 +94,10 @@ public class PlayListModesSplitPane extends BorderPane {
 		double[] array = { 1.00 - splitPane.getDividerPositions()[0], splitPane.getDividerPositions()[0] };
 
 		splitPane.getItems().clear();
-		if (Main.topBar.getWindowMode() == WindowMode.MAINMODE)
-			splitPane.getItems().addAll(Main.libraryMode.openedLibrariesViewer, Main.mediaInformation);
+		if (MainLoader.getTopBar().getWindowMode() == WindowMode.MAINMODE)
+			splitPane.getItems().addAll(Main.libraryMode.openedLibrariesViewer, MainLoader.getMediaInformation());
 		else
-			splitPane.getItems().addAll(Main.mediaInformation, Main.libraryMode.openedLibrariesViewer);
+			splitPane.getItems().addAll(MainLoader.getMediaInformation(), Main.libraryMode.openedLibrariesViewer);
 
 		// Set
 		splitPane.setDividerPositions(array);

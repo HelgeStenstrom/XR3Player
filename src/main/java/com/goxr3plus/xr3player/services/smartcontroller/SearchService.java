@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.logging.Level;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
@@ -138,7 +139,7 @@ public class SearchService extends Service<Void> {
 					});
 
 					// Choose the correct query based on the settings of the user
-					if (Main.settingsWindow.getPlayListsSettingsController().getFileSearchGroup().getToggles().get(0)
+					if (MainLoader.getSettingsWindow().getPlayListsSettingsController().getFileSearchGroup().getToggles().get(0)
 							.isSelected())
 						queryArray.add(" ) WHERE PATH LIKE '%" + word + "%' GROUP BY PATH LIMIT "
 								+ smartController.getMaximumPerPage() + " ");
@@ -161,7 +162,7 @@ public class SearchService extends Service<Void> {
 							: ("%" + word + "%");
 
 					// Choose the correct query based on the settings of the user
-					if (Main.settingsWindow.getPlayListsSettingsController().getFileSearchGroup().getToggles().get(0)
+					if (MainLoader.getSettingsWindow().getPlayListsSettingsController().getFileSearchGroup().getToggles().get(0)
 							.isSelected())
 						query = query + " WHERE PATH LIKE '" + wordQuery + "' LIMIT "
 								+ smartController.getMaximumPerPage();

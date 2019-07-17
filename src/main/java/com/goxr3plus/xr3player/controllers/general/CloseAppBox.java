@@ -3,6 +3,7 @@ package com.goxr3plus.xr3player.controllers.general;
 import java.io.IOException;
 
 import com.goxr3plus.xr3player.application.MainExit;
+import com.goxr3plus.xr3player.application.MainLoader;
 import com.goxr3plus.xr3player.application.MainTools;
 import org.kordamp.ikonli.javafx.StackedFontIcon;
 
@@ -95,7 +96,7 @@ public class CloseAppBox extends StackPane {
 		donate.setOnAction(a -> NetworkingTool.openWebSite("https://www.paypal.me/GOXR3PLUSCOMPANY"));
 
 		// about
-		about.setOnAction(a -> Main.aboutWindow.show());
+		about.setOnAction(a -> MainLoader.getAboutWindow().show());
 
 		// chooseBackground
 		chooseBackground.setOnAction(a -> MainTools.changeBackgroundImage());

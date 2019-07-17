@@ -3,10 +3,10 @@ package com.goxr3plus.xr3player.services.general;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import com.goxr3plus.xr3player.application.Main;
 import com.goxr3plus.xr3player.utils.general.NetworkingTool;
 
 public class StoppableService extends Service<Boolean> {
@@ -62,8 +62,8 @@ public class StoppableService extends Service<Boolean> {
 							// Try to connect
 							if (newStatus[0] != internetPreviousStatus || firstHack)
 								Platform.runLater(() -> {
-									Main.bottomBar.getInternetConnectionLabel().setDisable(!newStatus[0]);
-									Main.bottomBar.getInternetConnectionDescriptionLabel()
+									MainLoader.getBottomBar().getInternetConnectionLabel().setDisable(!newStatus[0]);
+									MainLoader.getBottomBar().getInternetConnectionDescriptionLabel()
 											.setText(newStatus[0] ? "Connected" : "Disconnected");
 								});
 
@@ -90,8 +90,8 @@ public class StoppableService extends Service<Boolean> {
 
 							// Run on JavaFX Thread
 							Platform.runLater(() -> {
-								Main.bottomBar.getCurrentTimeLabel().setText(localTime[0]);
-								Main.bottomBar.getRunningTimeLabel()
+								MainLoader.getBottomBar().getCurrentTimeLabel().setText(localTime[0]);
+								MainLoader.getBottomBar().getRunningTimeLabel()
 										.setText(minutes + (minutes == 1 ? " minute" : " minutes"));
 							});
 

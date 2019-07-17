@@ -3,6 +3,7 @@
  */
 package com.goxr3plus.xr3player.controllers.smartcontroller;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import org.controlsfx.control.textfield.TextFields;
 
 import javafx.geometry.Pos;
@@ -11,7 +12,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import com.goxr3plus.xr3player.application.Main;
 import com.goxr3plus.xr3player.services.smartcontroller.SearchService;
 
 /**
@@ -75,7 +75,7 @@ public class SmartControllerSearcher extends HBox {
 				smartController.getNavigationHBox().setDisable(false);
 				smartController.getLoadService().startService(false, false, false);
 
-			} else if (Main.settingsWindow.getPlayListsSettingsController().getInstantSearch().isSelected()) {
+			} else if (MainLoader.getSettingsWindow().getPlayListsSettingsController().getInstantSearch().isSelected()) {
 				saveSettingsBeforeSearch();
 				searchService.search(newValue);
 			}

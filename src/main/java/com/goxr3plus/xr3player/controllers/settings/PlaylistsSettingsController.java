@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTabPane;
@@ -135,10 +136,10 @@ public class PlaylistsSettingsController extends BorderPane {
 						.forEach(controller -> controller.setNewMaximumPerPage(maximumPerPlaylist, true));
 
 				// Finally all the Emotion Lists Controllers
-				Main.emotionListsController.hatedMediaListController.setNewMaximumPerPage(maximumPerPlaylist, true);
-				Main.emotionListsController.dislikedMediaListController.setNewMaximumPerPage(maximumPerPlaylist, true);
-				Main.emotionListsController.likedMediaListController.setNewMaximumPerPage(maximumPerPlaylist, true);
-				Main.emotionListsController.lovedMediaListController.setNewMaximumPerPage(maximumPerPlaylist, true);
+				MainLoader.getEmotionListsController().hatedMediaListController.setNewMaximumPerPage(maximumPerPlaylist, true);
+				MainLoader.getEmotionListsController().dislikedMediaListController.setNewMaximumPerPage(maximumPerPlaylist, true);
+				MainLoader.getEmotionListsController().likedMediaListController.setNewMaximumPerPage(maximumPerPlaylist, true);
+				MainLoader.getEmotionListsController().lovedMediaListController.setNewMaximumPerPage(maximumPerPlaylist, true);
 			}
 		});
 

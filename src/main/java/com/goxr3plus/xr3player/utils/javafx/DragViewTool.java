@@ -1,10 +1,10 @@
 package com.goxr3plus.xr3player.utils.javafx;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.Dragboard;
 import javafx.scene.paint.Color;
-import com.goxr3plus.xr3player.application.Main;
 import com.goxr3plus.xr3player.models.smartcontroller.Media;
 
 public final class DragViewTool {
@@ -21,7 +21,7 @@ public final class DragViewTool {
 	public static void setDragView(final Dragboard dragBoard, final Media media) {
 		final SnapshotParameters params = new SnapshotParameters();
 		params.setFill(Color.TRANSPARENT);
-		dragBoard.setDragView(Main.dragViewer.updateMedia(media).snapshot(params, new WritableImage(150, 150)), 50, 0);
+		dragBoard.setDragView(MainLoader.getDragViewer().updateMedia(media).snapshot(params, new WritableImage(150, 150)), 50, 0);
 	}
 
 	/**
@@ -33,7 +33,7 @@ public final class DragViewTool {
 	public static void setPlainTextDragView(final Dragboard dragBoard, final String title) {
 		final SnapshotParameters params = new SnapshotParameters();
 		params.setFill(Color.TRANSPARENT);
-		dragBoard.setDragView(Main.dragViewer.updateDropboxMedia(title).snapshot(params, new WritableImage(150, 150)),
+		dragBoard.setDragView(MainLoader.getDragViewer().updateDropboxMedia(title).snapshot(params, new WritableImage(150, 150)),
 				50, 0);
 	}
 

@@ -5,6 +5,7 @@ import java.util.concurrent.Executors;
 
 import com.goxr3plus.streamplayer.stream.ThreadFactoryWithNamePrefix;
 import com.goxr3plus.xr3player.application.Main;
+import com.goxr3plus.xr3player.application.MainLoader;
 import com.goxr3plus.xr3player.controllers.smartcontroller.SmartController;
 import com.goxr3plus.xr3player.controllers.windows.EmotionsWindow.Emotion;
 import com.goxr3plus.xr3player.enums.Genre;
@@ -56,13 +57,13 @@ public class EmotionListsController {
 
 		// Bidirectional binding with Instant Search
 		hatedMediaListController.getInstantSearch().selectedProperty().bindBidirectional(
-				Main.settingsWindow.getPlayListsSettingsController().getInstantSearch().selectedProperty());
+				MainLoader.getSettingsWindow().getPlayListsSettingsController().getInstantSearch().selectedProperty());
 		dislikedMediaListController.getInstantSearch().selectedProperty().bindBidirectional(
-				Main.settingsWindow.getPlayListsSettingsController().getInstantSearch().selectedProperty());
+				MainLoader.getSettingsWindow().getPlayListsSettingsController().getInstantSearch().selectedProperty());
 		likedMediaListController.getInstantSearch().selectedProperty().bindBidirectional(
-				Main.settingsWindow.getPlayListsSettingsController().getInstantSearch().selectedProperty());
+				MainLoader.getSettingsWindow().getPlayListsSettingsController().getInstantSearch().selectedProperty());
 		lovedMediaListController.getInstantSearch().selectedProperty().bindBidirectional(
-				Main.settingsWindow.getPlayListsSettingsController().getInstantSearch().selectedProperty());
+				MainLoader.getSettingsWindow().getPlayListsSettingsController().getInstantSearch().selectedProperty());
 	}
 
 	/**

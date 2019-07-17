@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.goxr3plus.xr3player.application.Main;
+import com.goxr3plus.xr3player.application.MainLoader;
 import com.goxr3plus.xr3player.controllers.custom.Marquee;
 import com.goxr3plus.xr3player.utils.general.InfoTool;
 import com.goxr3plus.xr3player.utils.javafx.JavaFXTool;
@@ -87,7 +88,7 @@ public class GeneralSettingsController extends BorderPane {
 					Integer.toString(JavaFXTool.getIndexOfSelectedToggle(sideBarPositionGroup)));
 
 			// Fix the side bar position
-			Main.sideBar.changeSide(
+			MainLoader.getSideBar().changeSide(
 					JavaFXTool.getIndexOfSelectedToggle(sideBarPositionGroup) == 0 ? NodeOrientation.LEFT_TO_RIGHT
 							: NodeOrientation.RIGHT_TO_LEFT);
 		});
@@ -158,10 +159,10 @@ public class GeneralSettingsController extends BorderPane {
 					tab -> ((Marquee) ((HBox) tab.getGraphic()).getChildren().get(3)).checkAnimationValidity(value));
 
 			// For the Web Browser
-			Main.webBrowser.setMovingTitlesEnabled(value);
+			MainLoader.getWebBrowser().setMovingTitlesEnabled(value);
 
-			Main.topBar.getHighGraphics().setVisible(value);
-			Main.topBar.getHighGraphics().setManaged(value);
+			MainLoader.getTopBar().getHighGraphics().setVisible(value);
+			MainLoader.getTopBar().getHighGraphics().setManaged(value);
 		});
 
 	}

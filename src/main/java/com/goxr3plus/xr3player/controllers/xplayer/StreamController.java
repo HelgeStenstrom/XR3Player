@@ -5,7 +5,7 @@ import java.util.Map;
 import com.goxr3plus.streamplayer.enums.Status;
 import com.goxr3plus.streamplayer.stream.StreamPlayerEvent;
 import com.goxr3plus.streamplayer.stream.StreamPlayerListener;
-import com.goxr3plus.xr3player.application.Main;
+import com.goxr3plus.xr3player.application.MainLoader;
 import com.goxr3plus.xr3player.enums.NotificationType;
 import com.goxr3plus.xr3player.utils.general.AudioImageTool;
 import com.goxr3plus.xr3player.utils.general.TimeTool;
@@ -47,7 +47,7 @@ public class StreamController implements StreamPlayerListener {
 		// System.out.println("Entered Progress...")
 
 		// Allow DSP ?
-		if (Main.settingsWindow.getGeneralSettingsController().getHighGraphicsToggle().isSelected()
+		if (MainLoader.getSettingsWindow().getGeneralSettingsController().getHighGraphicsToggle().isSelected()
 			&& controller.visualizerVisibility.get()) {
 			controller.visualizer.writeDSP(pcmdata);
 		}
@@ -175,7 +175,7 @@ public class StreamController implements StreamPlayerListener {
 				controller.mediaFileMarquee.setText(IOInfo.getFileName(controller.xPlayerModel.songPathProperty().get()));
 
 				// Notification
-				if (Main.settingsWindow.getxPlayersSettingsController().getShowPlayerNotifications().isSelected()) {
+				if (MainLoader.getSettingsWindow().getxPlayersSettingsController().getShowPlayerNotifications().isSelected()) {
 
 					// Check if it has Album Image
 					final Image image = AudioImageTool.getAudioAlbumImage(controller.xPlayerModel.songPathProperty().get(), 60, 60);

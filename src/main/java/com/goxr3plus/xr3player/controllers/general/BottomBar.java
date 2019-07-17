@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import com.jfoenix.controls.JFXButton;
@@ -16,7 +17,6 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import com.goxr3plus.xr3player.application.Main;
 import com.goxr3plus.xr3player.controllers.settings.ApplicationSettingsController.SettingsTab;
 import com.goxr3plus.xr3player.controllers.windows.ConsoleWindowController.ConsoleTab;
 import com.goxr3plus.xr3player.services.general.StoppableService;
@@ -100,13 +100,13 @@ public class BottomBar extends BorderPane {
 	private void initialize() {
 
 		// keyBindingsLabel
-		keyBindings.setOnAction(a -> Main.settingsWindow.showWindow(SettingsTab.SHORTCUTS));
+		keyBindings.setOnAction(a -> MainLoader.getSettingsWindow().showWindow(SettingsTab.SHORTCUTS));
 
 		// SpeechRecognitionToggle
-		speechRecognitionToggle.setOnAction(a -> Main.consoleWindow.showWindow(ConsoleTab.SPEECH_RECOGNITION));
+		speechRecognitionToggle.setOnAction(a -> MainLoader.getConsoleWindow().showWindow(ConsoleTab.SPEECH_RECOGNITION));
 
 		// showHideSideBar
-		showHideSideBar.selectedProperty().addListener((observable, oldValue, newValue) -> Main.sideBar.toogleBar());
+		showHideSideBar.selectedProperty().addListener((observable, oldValue, newValue) -> MainLoader.getSideBar().toogleBar());
 
 		// enableBar
 		enableBar.setOnAction(a -> barEnabledToggle.setSelected(!barEnabledToggle.isSelected()));

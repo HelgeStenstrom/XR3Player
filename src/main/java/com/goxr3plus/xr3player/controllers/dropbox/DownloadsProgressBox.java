@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import com.jfoenix.controls.JFXButton;
 
 import javafx.fxml.FXML;
@@ -78,7 +79,7 @@ public class DownloadsProgressBox extends StackPane {
 		// deleteFile
 		deleteFile.disableProperty().bind(dropBoxDownloadedFile.getDownloadService().runningProperty());
 		deleteFile.setOnAction(action -> {
-			List<Boolean> answers = Main.mediaDeleteWindow.doDeleteQuestion(false, dropBoxDownloadedFile.getTitle(), 1,
+			List<Boolean> answers = MainLoader.getMediaDeleteWindow().doDeleteQuestion(false, dropBoxDownloadedFile.getTitle(), 1,
 					Main.window);
 
 			// Check if the user is sure he want's to go on delete action

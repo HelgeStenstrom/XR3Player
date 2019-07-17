@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import org.kordamp.ikonli.javafx.FontIcon;
 import org.kordamp.ikonli.javafx.StackedFontIcon;
 
@@ -226,9 +227,9 @@ public abstract class Media {
 		searchButton.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
 		searchButton.setOnMouseReleased(m -> {
 			try {
-				Main.webBrowser.createTabAndSelect(
+				MainLoader.getWebBrowser().createTabAndSelect(
 					"https://www.google.com/search?q=" + URLEncoder.encode(this.getTitle(), "UTF-8"));
-				Main.topBar.goMode(WindowMode.WEBMODE);
+				MainLoader.getTopBar().goMode(WindowMode.WEBMODE);
 			} catch (final UnsupportedEncodingException ex) {
 				ex.printStackTrace();
 			}
@@ -244,9 +245,9 @@ public abstract class Media {
 		youtubeButton.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
 		youtubeButton.setOnMouseReleased(m -> {
 			try {
-				Main.webBrowser.createTabAndSelect(
+				MainLoader.getWebBrowser().createTabAndSelect(
 					"https://www.youtube.com/results?search_query=" + URLEncoder.encode(this.getTitle(), "UTF-8"));
-				Main.topBar.goMode(WindowMode.WEBMODE);
+				MainLoader.getTopBar().goMode(WindowMode.WEBMODE);
 			} catch (final UnsupportedEncodingException ex) {
 				ex.printStackTrace();
 			}
@@ -261,7 +262,7 @@ public abstract class Media {
 		buyButton.setStyle("-fx-cursor:hand");
 		buyButton.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
 		buyButton.setOnMouseReleased(
-			m -> Main.shopContextMenu.showContextMenu(getTitle(), m.getScreenX(), m.getScreenY()));
+			m -> MainLoader.getShopContextMenu().showContextMenu(getTitle(), m.getScreenX(), m.getScreenY()));
 
 		// HBox
 		final HBox hbox = new HBox(searchButton, youtubeButton, buyButton);
@@ -711,7 +712,7 @@ public abstract class Media {
 			// Do question?
 			if (!doQuestion)
 				hasBeenDeleted = removeItem(permanent, c);
-			else if (Main.mediaDeleteWindow.doDeleteQuestion(permanent, fileName.get(), 1, Main.window).get(0))
+			else if (MainLoader.getMediaDeleteWindow().doDeleteQuestion(permanent, fileName.get(), 1, Main.window).get(0))
 				hasBeenDeleted = removeItem(permanent, c);
 
 			if (hasBeenDeleted && deleteStatement != null) {
@@ -754,10 +755,10 @@ public abstract class Media {
 		// Playlist , then we want also to
 		// vanish it completely)
 		if (controller.getGenre() == Genre.EMOTIONSMEDIA) {
-			Main.emotionListsController.hatedMediaList.remove(getFilePath(), false);
-			Main.emotionListsController.dislikedMediaList.remove(getFilePath(), false);
-			Main.emotionListsController.likedMediaList.remove(getFilePath(), false);
-			Main.emotionListsController.lovedMediaList.remove(getFilePath(), false);
+			MainLoader.getEmotionListsController().hatedMediaList.remove(getFilePath(), false);
+			MainLoader.getEmotionListsController().dislikedMediaList.remove(getFilePath(), false);
+			MainLoader.getEmotionListsController().likedMediaList.remove(getFilePath(), false);
+			MainLoader.getEmotionListsController().lovedMediaList.remove(getFilePath(), false);
 		}
 
 		return true;
@@ -779,15 +780,15 @@ public abstract class Media {
 
 		// Open Window
 		final String extension = "." + IOInfo.getFileExtension(getFilePath());
-		Main.renameWindow.show(getTitle(), node, "Media Renaming", FileCategory.FILE);
+		MainLoader.getRenameWindow().show(getTitle(), node, "Media Renaming", FileCategory.FILE);
 		final String oldFilePath = getFilePath();
 
 		// Bind
-		title.bind(Main.renameWindow.getInputField().textProperty());
-		fileName.bind(Main.renameWindow.getInputField().textProperty().concat(extension));
+		title.bind(MainLoader.getRenameWindow().getInputField().textProperty());
+		fileName.bind(MainLoader.getRenameWindow().getInputField().textProperty().concat(extension));
 
 		// When the Rename Window is closed do the rename
-		Main.renameWindow.showingProperty().addListener(new InvalidationListener() {
+		MainLoader.getRenameWindow().showingProperty().addListener(new InvalidationListener() {
 			/**
 			 * [[SuppressWarningsSpartan]]
 			 */
@@ -795,10 +796,10 @@ public abstract class Media {
 			public void invalidated(final Observable observable) {
 
 				// Remove the Listener
-				Main.renameWindow.showingProperty().removeListener(this);
+				MainLoader.getRenameWindow().showingProperty().removeListener(this);
 
 				// !Showing
-				if (!Main.renameWindow.isShowing()) {
+				if (!MainLoader.getRenameWindow().isShowing()) {
 
 					// Remove Binding
 					title.unbind();
@@ -807,7 +808,7 @@ public abstract class Media {
 					final String newFilePath = new File(oldFilePath).getParent() + File.separator + fileName.get();
 
 					// !XPressed && // Old name != New name
-					if (Main.renameWindow.wasAccepted() && !getFilePath().equals(newFilePath)) {
+					if (MainLoader.getRenameWindow().wasAccepted() && !getFilePath().equals(newFilePath)) {
 
 						try {
 
@@ -835,7 +836,7 @@ public abstract class Media {
 							mediaRename(oldFilePath, newFilePath);
 
 							// Let's also fix the TreeView
-							Main.treeManager.getService().rename(oldFilePath, newFilePath);
+							MainLoader.getTreeManager().getService().rename(oldFilePath, newFilePath);
 
 							// Commit to the Database
 							Main.dbManager.commit();
@@ -906,13 +907,13 @@ public abstract class Media {
 		Main.playedSongs.renameMedia(oldFilePath, newFilePath, false);
 
 		// Inform Hated Media List
-		Main.emotionListsController.hatedMediaList.renameMedia(oldFilePath, newFilePath, false);
+		MainLoader.getEmotionListsController().hatedMediaList.renameMedia(oldFilePath, newFilePath, false);
 		// Inform Disliked Media List
-		Main.emotionListsController.dislikedMediaList.renameMedia(oldFilePath, newFilePath, false);
+		MainLoader.getEmotionListsController().dislikedMediaList.renameMedia(oldFilePath, newFilePath, false);
 		// Inform Liked Media List
-		Main.emotionListsController.likedMediaList.renameMedia(oldFilePath, newFilePath, false);
+		MainLoader.getEmotionListsController().likedMediaList.renameMedia(oldFilePath, newFilePath, false);
 		// Inform Loved Media List
-		Main.emotionListsController.lovedMediaList.renameMedia(oldFilePath, newFilePath, false);
+		MainLoader.getEmotionListsController().lovedMediaList.renameMedia(oldFilePath, newFilePath, false);
 
 		// Update the SearchWindow
 		Main.searchWindowSmartController.getItemsObservableList().forEach(media -> {
@@ -964,14 +965,14 @@ public abstract class Media {
 	public void updateStars(final Node node) {
 
 		// Show the Window
-		Main.starWindow.show(getFileName(), stars.get(), node);
+		MainLoader.getStarWindow().show(getFileName(), stars.get(), node);
 
 		// Keep in memory stars ...
 		final double previousStars = stars.get();
-		stars.bind(Main.starWindow.starsProperty());
+		stars.bind(MainLoader.getStarWindow().starsProperty());
 
 		// Listener
-		Main.starWindow.getWindow().showingProperty().addListener(new InvalidationListener() {
+		MainLoader.getStarWindow().getWindow().showingProperty().addListener(new InvalidationListener() {
 			/**
 			 * [[SuppressWarningsSpartan]]
 			 */
@@ -979,16 +980,16 @@ public abstract class Media {
 			public void invalidated(final Observable o) {
 
 				// Remove the listener
-				Main.starWindow.getWindow().showingProperty().removeListener(this);
+				MainLoader.getStarWindow().getWindow().showingProperty().removeListener(this);
 
 				// !showing?
-				if (!Main.starWindow.getWindow().isShowing()) {
+				if (!MainLoader.getStarWindow().getWindow().isShowing()) {
 
 					// unbind stars property
 					stars.unbind();
 
 					// Accepted?
-					if (Main.starWindow.wasAccepted()) {
+					if (MainLoader.getStarWindow().wasAccepted()) {
 
 						// Inform all Libraries SmartControllers
 						Main.libraryMode.viewer.getItemsObservableList().stream()

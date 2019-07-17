@@ -42,10 +42,10 @@ public class MainExit {
                 terminateXR3Player(0);
             else {
                 final VacuumProgressService vService = new VacuumProgressService();
-                Main.updateScreen.getLabel().textProperty().bind(vService.messageProperty());
-                Main.updateScreen.getProgressBar().setProgress(-1);
-                Main.updateScreen.getProgressBar().progressProperty().bind(vService.progressProperty());
-                Main.updateScreen.setVisible(true);
+                MainLoader.getUpdateScreen().getLabel().textProperty().bind(vService.messageProperty());
+                MainLoader.getUpdateScreen().getProgressBar().setProgress(-1);
+                MainLoader.getUpdateScreen().getProgressBar().progressProperty().bind(vService.progressProperty());
+                MainLoader.getUpdateScreen().setVisible(true);
                 vService.start(new File(DatabaseTool.getUserFolderAbsolutePathWithSeparator() + "dbFile.db"),
                         new File(DatabaseTool.getUserFolderAbsolutePathWithSeparator() + "dbFile.db-journal"));
                 Main.dbManager.commitAndVacuum();
@@ -92,7 +92,7 @@ public class MainExit {
             case WINDOWS:
                 new Thread(() -> {
                     // Disposing all Browsers...
-                    Main.webBrowser.disposeAllBrowsers();
+                    MainLoader.getWebBrowser().disposeAllBrowsers();
                     System.exit(exitCode);
                 }).start();
                 break;
@@ -100,7 +100,7 @@ public class MainExit {
             case MAC:
                 Platform.runLater(() -> {
                     // Disposing all Browsers...
-                    Main.webBrowser.disposeAllBrowsers();
+                    MainLoader.getWebBrowser().disposeAllBrowsers();
                     System.exit(exitCode);
                 });
                 break;
@@ -170,7 +170,7 @@ public class MainExit {
             } catch (final Exception ex) {
                 Logger.getLogger(Main.class.getName()).log(Level.INFO, null, ex);
                 Platform.runLater(() -> {
-                    Main.updateScreen.setVisible(false);
+                    MainLoader.getUpdateScreen().setVisible(false);
 
                     // Show failed message
                     Platform.runLater(() -> AlertTool.showNotification("Restart seems to failed",
@@ -188,7 +188,7 @@ public class MainExit {
         // Wait 20 seconds
         final PauseTransition pause = new PauseTransition(Duration.seconds(seconds));
         pause.setOnFinished(f -> {
-            Main.updateScreen.setVisible(false);
+            MainLoader.getUpdateScreen().setVisible(false);
 
             // Show failed message
             if (seconds != 0 && askUser)

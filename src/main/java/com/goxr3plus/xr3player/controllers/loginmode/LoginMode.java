@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.goxr3plus.xr3player.application.MainLoadUser;
+import com.goxr3plus.xr3player.application.MainLoader;
 import org.atteo.evo.inflector.English;
 
 import com.jfoenix.controls.JFXButton;
@@ -201,15 +202,15 @@ public class LoginMode extends StackPane {
 		public void invalidated(final Observable observable) {
 
 			// Remove the Listener
-			Main.renameWindow.showingProperty().removeListener(this);
+			MainLoader.getRenameWindow().showingProperty().removeListener(this);
 
 			// !Showing && !XPressed
-			if (!Main.renameWindow.isShowing() && Main.renameWindow.wasAccepted()) {
+			if (!MainLoader.getRenameWindow().isShowing() && MainLoader.getRenameWindow().wasAccepted()) {
 
 				Main.window.requestFocus();
 
 				// Check if this name already exists
-				final String newName = Main.renameWindow.getUserInput();
+				final String newName = MainLoader.getRenameWindow().getUserInput();
 
 				// if can pass
 				if (!viewer.getItemsObservableList().stream()
@@ -341,13 +342,13 @@ public class LoginMode extends StackPane {
 						viewer.itemsWrapperProperty().sizeProperty()));
 
 		// == exportDatabase
-		exportDatabase.setOnAction(a -> Main.sideBar.exportDatabase());
+		exportDatabase.setOnAction(a -> MainLoader.getSideBar().exportDatabase());
 
 		// == importDatabase
-		importDatabase.setOnAction(a -> Main.sideBar.importDatabase());
+		importDatabase.setOnAction(a -> MainLoader.getSideBar().importDatabase());
 
 		// == deleteDatabase
-		deleteDatabase.setOnAction(a -> Main.sideBar.deleteDatabase());
+		deleteDatabase.setOnAction(a -> MainLoader.getSideBar().deleteDatabase());
 
 		// == color picker
 		final String defaultWebColor = "#ef4949";
@@ -417,10 +418,10 @@ public class LoginMode extends StackPane {
 	public void createNewUser(final Node owner, final boolean... exactPositioning) {
 
 		// Open rename window
-		Main.renameWindow.show("", owner, "Creating new User", FileCategory.DIRECTORY, exactPositioning);
+		MainLoader.getRenameWindow().show("", owner, "Creating new User", FileCategory.DIRECTORY, exactPositioning);
 
 		// Add the showing listener
-		Main.renameWindow.showingProperty().addListener(userCreationInvalidator);
+		MainLoader.getRenameWindow().showingProperty().addListener(userCreationInvalidator);
 
 	}
 

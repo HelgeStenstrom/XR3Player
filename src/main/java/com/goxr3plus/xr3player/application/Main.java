@@ -1,57 +1,32 @@
 package com.goxr3plus.xr3player.application;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import com.goxr3plus.fxborderlessscene.borderless.BorderlessScene;
-import com.goxr3plus.xr3player.controllers.chromium.WebBrowserController;
 import com.goxr3plus.xr3player.controllers.djmode.DJMode;
 import com.goxr3plus.xr3player.controllers.dropbox.DropboxDownloadsTableViewer;
 import com.goxr3plus.xr3player.controllers.dropbox.DropboxViewer;
-import com.goxr3plus.xr3player.controllers.general.BottomBar;
 import com.goxr3plus.xr3player.controllers.general.EmotionsTabPane;
-import com.goxr3plus.xr3player.controllers.general.MainLoadingScreen;
 import com.goxr3plus.xr3player.controllers.general.OnlineMusicController;
 import com.goxr3plus.xr3player.controllers.general.PlayListModesSplitPane;
 import com.goxr3plus.xr3player.controllers.general.PlayListModesTabPane;
-import com.goxr3plus.xr3player.controllers.general.SideBar;
-import com.goxr3plus.xr3player.controllers.general.TopBar;
-import com.goxr3plus.xr3player.controllers.general.WelcomeScreen;
 import com.goxr3plus.xr3player.controllers.librarymode.LibraryMode;
 import com.goxr3plus.xr3player.controllers.loginmode.LoginMode;
 import com.goxr3plus.xr3player.controllers.loginmode.UserInformation;
 import com.goxr3plus.xr3player.controllers.moviemode.MovieModeController;
-import com.goxr3plus.xr3player.controllers.settings.ApplicationSettingsController;
-import com.goxr3plus.xr3player.controllers.smartcontroller.DragViewer;
-import com.goxr3plus.xr3player.controllers.smartcontroller.MediaContextMenu;
-import com.goxr3plus.xr3player.controllers.smartcontroller.MediaInformation;
-import com.goxr3plus.xr3player.controllers.smartcontroller.ShopContextMenu;
 import com.goxr3plus.xr3player.controllers.smartcontroller.SmartController;
-import com.goxr3plus.xr3player.controllers.systemtree.TreeViewContextMenu;
-import com.goxr3plus.xr3player.controllers.systemtree.TreeViewManager;
-import com.goxr3plus.xr3player.controllers.tagging.TagWindow;
-import com.goxr3plus.xr3player.controllers.windows.AboutWindow;
-import com.goxr3plus.xr3player.controllers.windows.ConsoleWindowController;
-import com.goxr3plus.xr3player.controllers.windows.EmotionsWindow;
-import com.goxr3plus.xr3player.controllers.windows.ExportWindowController;
 import com.goxr3plus.xr3player.controllers.windows.FileAndFolderChooser;
-import com.goxr3plus.xr3player.controllers.windows.MediaDeleteWindow;
-import com.goxr3plus.xr3player.controllers.windows.MediaSearchWindow;
-import com.goxr3plus.xr3player.controllers.windows.RenameWindow;
-import com.goxr3plus.xr3player.controllers.windows.StarWindow;
-import com.goxr3plus.xr3player.controllers.windows.UpdateWindow;
 import com.goxr3plus.xr3player.controllers.xplayer.XPlayersList;
 import com.goxr3plus.xr3player.database.DatabaseManager;
 import com.goxr3plus.xr3player.database.DatabaseTool;
 import com.goxr3plus.xr3player.database.PropertiesDb;
-import com.goxr3plus.xr3player.models.lists.EmotionListsController;
 import com.goxr3plus.xr3player.models.lists.PlayedMediaList;
 import com.goxr3plus.xr3player.models.lists.StarredMediaList;
-
 import javafx.application.Application;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 //import main.java.com.goxr3plus.xr3capture.application.CaptureWindow;
 
 /**
@@ -102,114 +77,8 @@ public class Main extends Application {
 
 	// ------ START: The below have not dependencies on classes ------//
 
-	public static WelcomeScreen welcomeScreen;
-
-	public static MediaDeleteWindow mediaDeleteWindow;
-
-	/**
-	 * The star window.
-	 */
-	public static StarWindow starWindow;
-
-	/**
-	 * The rename window.
-	 */
-	public static RenameWindow renameWindow;
-
-	/**
-	 * The rename window.
-	 */
-	public static EmotionsWindow emotionsWindow;
-
-	/**
-	 * Audio Tagging Window
-	 */
-	public static TagWindow tagWindow;
-
-	public static MediaSearchWindow mediaSearchWindow;
-
-	/**
-	 * This window is being used to export files from the application to the outside
-	 * world
-	 */
-	public static ExportWindowController exportWindow;
-
-	/**
-	 * The About Window of the Application
-	 */
-	public static AboutWindow aboutWindow;
-
-	/**
-	 * The console Window of the Application
-	 */
-	public static ConsoleWindowController consoleWindow;
-
-	/**
-	 * This Window contains the settings for the whole application
-	 */
-	public static ApplicationSettingsController settingsWindow;
-
-	/**
-	 * This class is used to capture the computer Screen or a part of it [ Check
-	 * XR3Capture package]
-	 */
-//	public static CaptureWindow captureWindow;
-
-	public static UpdateWindow updateWindow;
 
 	//
-
-	/**
-	 * The Top Bar of the Application
-	 */
-	public static TopBar topBar;
-
-	/**
-	 * The Bottom Bar of the Application
-	 */
-	public static BottomBar bottomBar;
-
-	/**
-	 * The Side Bar of The Application
-	 */
-	public static SideBar sideBar;
-
-	/**
-	 * Application Update Screen
-	 */
-	public static MainLoadingScreen updateScreen;
-
-	/**
-	 * The TreeView of DJMode
-	 */
-	public static TreeViewManager treeManager;
-
-	public static MediaInformation mediaInformation;
-	//
-
-	public static TreeViewContextMenu treeViewContextMenu;
-
-	/**
-	 * The Constant songsContextMenu.
-	 */
-	public static MediaContextMenu songsContextMenu;
-
-	/**
-	 * The Constant songsContextMenu.
-	 */
-	public static ShopContextMenu shopContextMenu;
-
-	/**
-	 * The Constant EmotionListsController.
-	 */
-	public static EmotionListsController emotionListsController;
-
-	//
-
-	/**
-	 * The WebBrowser of the Application
-	 */
-	public static WebBrowserController webBrowser;
 
 	//
 
@@ -227,11 +96,6 @@ public class Main extends Application {
 	 * The Constant .
 	 */
 	public static PlayedMediaList playedSongs = new PlayedMediaList();
-
-	/**
-	 * Used to provide ui for drag and view
-	 */
-	public static DragViewer dragViewer;
 
 	// ------ END: The above have not dependencies on other classes ------
 

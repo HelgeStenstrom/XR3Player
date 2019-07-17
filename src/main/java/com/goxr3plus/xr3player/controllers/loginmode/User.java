@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -90,21 +91,21 @@ public class User extends StackPane {
 		public void invalidated(final Observable observable) {
 
 			// Remove the Listener
-			Main.renameWindow.showingProperty().removeListener(this);
+			MainLoader.getRenameWindow().showingProperty().removeListener(this);
 
 			// !Showing
-			if (!Main.renameWindow.isShowing()) {
+			if (!MainLoader.getRenameWindow().isShowing()) {
 
 				// old && new -> name
 				final String oldName = getName();
-				final String newName = Main.renameWindow.getUserInput();
+				final String newName = MainLoader.getRenameWindow().getUserInput();
 				boolean success = false;
 
 				// Remove Bindings
 				nameField.textProperty().unbind();
 
 				// !XPressed
-				if (Main.renameWindow.wasAccepted()) {
+				if (MainLoader.getRenameWindow().wasAccepted()) {
 
 					// duplicate?
 					if (!Main.loginMode.viewer.getItemsObservableList().stream()
@@ -330,12 +331,12 @@ public class User extends StackPane {
 	public void renameUser(final Node node) {
 
 		// Open the Window
-		Main.renameWindow.show(getName(), node, "User Renaming", FileCategory.DIRECTORY);
+		MainLoader.getRenameWindow().show(getName(), node, "User Renaming", FileCategory.DIRECTORY);
 
 		// Bind
-		nameField.textProperty().bind(Main.renameWindow.getInputField().textProperty());
+		nameField.textProperty().bind(MainLoader.getRenameWindow().getInputField().textProperty());
 
-		Main.renameWindow.showingProperty().addListener(renameInvalidator);
+		MainLoader.getRenameWindow().showingProperty().addListener(renameInvalidator);
 	}
 
 	/**

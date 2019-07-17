@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.logging.Level;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
@@ -72,7 +73,7 @@ public class LoadService extends Service<Void> {
 			smartController.getReloadVBox().setVisible(false);
 
 		// Hide ContextMenu
-		Main.songsContextMenu.hide();
+		MainLoader.getSongsContextMenu().hide();
 
 		// Start
 		try {

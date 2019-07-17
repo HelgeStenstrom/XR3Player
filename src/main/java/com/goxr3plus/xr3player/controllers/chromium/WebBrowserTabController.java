@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import org.apache.commons.validator.routines.UrlValidator;
 import org.kordamp.ikonli.javafx.FontIcon;
 import org.kordamp.ikonli.javafx.StackedFontIcon;
@@ -813,7 +814,7 @@ public class WebBrowserTabController extends StackPane {
 			// the "Open link in new window" menu item to our context menu
 			if (!p.getLinkText().isEmpty())
 				contextMenu.getItems().add(createMenuItem("Open link in new Tab",
-						() -> Main.webBrowser.addNewTabOnTheEnd(p.getLinkURL())));
+						() -> MainLoader.getWebBrowser().addNewTabOnTheEnd(p.getLinkURL())));
 
 			// Create and add "Reload" menu item to our context menu
 			contextMenu.getItems().add(createMenuItem("Reload", () -> p.getBrowser().reload()));

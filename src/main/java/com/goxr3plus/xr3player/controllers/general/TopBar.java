@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import com.jfoenix.controls.JFXButton;
@@ -117,7 +118,7 @@ public class TopBar extends BorderPane {
 			// Hide all
 			Main.libraryMode.setVisible(false);
 			Main.userInfoMode.setVisible(false);
-			Main.rootStackPane.getChildren().remove(Main.webBrowser);
+			Main.rootStackPane.getChildren().remove(MainLoader.getWebBrowser());
 			Main.movieModeController.setVisible(false);
 
 			// Now decide which one to show
@@ -135,7 +136,7 @@ public class TopBar extends BorderPane {
 				Main.userInfoMode.setVisible(true);
 
 			} else if (newValue == WindowMode.WEBMODE) {
-				Main.rootStackPane.getChildren().add(Main.webBrowser);
+				Main.rootStackPane.getChildren().add(MainLoader.getWebBrowser());
 
 			}
 
@@ -148,7 +149,7 @@ public class TopBar extends BorderPane {
 		});
 
 		// showHideSideBar
-		showHideSideBar.setOnAction(a -> Main.bottomBar.getShowHideSideBar().setSelected(!Main.bottomBar.getShowHideSideBar().isSelected()));
+		showHideSideBar.setOnAction(a -> MainLoader.getBottomBar().getShowHideSideBar().setSelected(!MainLoader.getBottomBar().getShowHideSideBar().isSelected()));
 	}
 
 	/**

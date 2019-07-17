@@ -3,6 +3,7 @@ package com.goxr3plus.xr3player.controllers.general;
 import java.util.Comparator;
 import java.util.List;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import javafx.animation.Animation.Status;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
@@ -548,14 +549,14 @@ public class Viewer extends Region {
 						// Main.mediaInformation.updateInformation(mediaViewer.getMedia())
 
 						// Select the matching item on Playlist
-						if (Main.settingsWindow.getPlayListsSettingsController().getSelectMatchingPlaylistItem()
+						if (MainLoader.getSettingsWindow().getPlayListsSettingsController().getSelectMatchingPlaylistItem()
 								.isSelected())
 							smartController.getItemsObservableList().stream()
 									.filter(media -> media.getFilePath().equals(mediaViewer.getMedia().getFilePath()))
 									.findFirst().ifPresent(media -> {
 
 										// Check if selection is allowed
-										if (Main.settingsWindow.getPlayListsSettingsController()
+										if (MainLoader.getSettingsWindow().getPlayListsSettingsController()
 												.getSelectMatchingPlaylistItem().isSelected()) {
 
 											// Select
@@ -567,7 +568,7 @@ public class Viewer extends Region {
 										}
 
 										// Check if scroll is allowed
-										if (Main.settingsWindow.getPlayListsSettingsController()
+										if (MainLoader.getSettingsWindow().getPlayListsSettingsController()
 												.getSelectMatchingPlaylistItem().isSelected()) {
 
 											// ScrollTo
@@ -599,7 +600,7 @@ public class Viewer extends Region {
 							Bounds bounds = mediaViewer.localToScreen(mediaViewer.getBoundsInLocal());
 
 							// Show Context Menu
-							Main.songsContextMenu.showContextMenu(mediaViewer.getMedia(), smartController.getGenre(),
+							MainLoader.getSongsContextMenu().showContextMenu(mediaViewer.getMedia(), smartController.getGenre(),
 									bounds.getMinX() + 25, bounds.getMinY() + bounds.getHeight() / 4, smartController,
 									mediaViewer);
 							timeline.setOnFinished(null);
@@ -609,7 +610,7 @@ public class Viewer extends Region {
 						Bounds bounds = mediaViewer.localToScreen(mediaViewer.getBoundsInLocal());
 
 						// Show Context Menu
-						Main.songsContextMenu.showContextMenu(mediaViewer.getMedia(), smartController.getGenre(),
+						MainLoader.getSongsContextMenu().showContextMenu(mediaViewer.getMedia(), smartController.getGenre(),
 								bounds.getMinX() + 25, bounds.getMinY() + bounds.getHeight() / 4, smartController,
 								mediaViewer);
 					}

@@ -31,7 +31,7 @@ public class MainLoadUser {
     public static void loadTheUsers() {
 
         // Set Update Screen Visible
-        Main.updateScreen.setVisible(true);
+        MainLoader.getUpdateScreen().setVisible(true);
 
         // Create Chromium Folder
         if (!IOAction.createFileOrFolder(DatabaseTool.getAbsoluteDatabaseParentFolderPathWithSeparator() + "Chromium",
@@ -83,16 +83,16 @@ public class MainLoadUser {
         // Close the LoginMode
         Main.loginMode.userSearchBox.getSearchBoxWindow().close();
         Main.loginMode.setVisible(false);
-        Main.updateScreen.getProgressBar().setProgress(-1);
-        Main.updateScreen.getLabel().setText("Launching...");
-        Main.updateScreen.setVisible(true);
+        MainLoader.getUpdateScreen().getProgressBar().setProgress(-1);
+        MainLoader.getUpdateScreen().getLabel().setText("Launching...");
+        MainLoader.getUpdateScreen().setVisible(true);
 
         // Prepare the BackgroundImageView
         Main.loginMode.getChildren().remove(Main.loginMode.getBackgroundImageView());
         Main.applicationStackPane.getChildren().add(1, Main.loginMode.getBackgroundImageView());
 
         // SideBar
-        Main.sideBar.prepareForLoginMode(false);
+        MainLoader.getSideBar().prepareForLoginMode(false);
 
         // Set root visible
         Main.root.setVisible(true);
@@ -116,7 +116,7 @@ public class MainLoadUser {
 
             // --------- Create the Menu Items of available users for Settings Window
             if (Main.loginMode.viewer.getItemsObservableList().size() == 1)
-                Main.settingsWindow.getCopySettingsMenuButton().setDisable(true);
+                MainLoader.getSettingsWindow().getCopySettingsMenuButton().setDisable(true);
             else
                 Main.loginMode.viewer.getItemsObservableList().stream()
                         .filter(userr -> !((User) userr).getName().equals(selectedUser.getName())).forEach(userr -> {
@@ -137,7 +137,7 @@ public class MainLoadUser {
                         // Ask the user
                         if (AlertTool.doQuestion("Override Settings",
                                 "Soore you want to override your current user settings with the one that you selected from the menu ?",
-                                Main.settingsWindow.getCopySettingsMenuButton(), Main.window))
+                                MainLoader.getSettingsWindow().getCopySettingsMenuButton(), Main.window))
 
                             // Don't block the application due to IO Operations
                             new Thread(() -> {
@@ -169,7 +169,7 @@ public class MainLoadUser {
                         menuItem.setDisable(true);
 
                     // Finally add the Menu Item
-                    Main.settingsWindow.getCopySettingsMenuButton().getItems().add(menuItem);
+                    MainLoader.getSettingsWindow().getCopySettingsMenuButton().getItems().add(menuItem);
                 });
 
             // ----Update the UserInformation properties file when the total libraries
@@ -179,7 +179,7 @@ public class MainLoadUser {
                             .updateProperty("Total-Libraries", String.valueOf(newValue.intValue())));
 
             // ----Bind Label to User Name
-            Main.sideBar.getNameLabel().setText(Main.userInfoMode.getUserName().getText());
+            MainLoader.getSideBar().getNameLabel().setText(Main.userInfoMode.getUserName().getText());
 
             // ---Store this user as last logged in user
             Main.applicationProperties.updateProperty("Last-LoggedIn-User", selectedUser.getName());

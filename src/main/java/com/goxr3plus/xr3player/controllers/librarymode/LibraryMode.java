@@ -12,6 +12,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import org.atteo.evo.inflector.English;
 
 import com.goxr3plus.xr3player.application.Main;
@@ -210,7 +211,7 @@ public class LibraryMode extends BorderPane {
         public void invalidated(Observable observable) {
 
             // Remove the Listener
-            Main.renameWindow.showingProperty().removeListener(this);
+            MainLoader.getRenameWindow().showingProperty().removeListener(this);
 
 
             //Rename current library
@@ -221,12 +222,12 @@ public class LibraryMode extends BorderPane {
     private void createLibrary() {
 
         // !Showing && !XPressed
-        if (!Main.renameWindow.isShowing() && Main.renameWindow.wasAccepted()) {
+        if (!MainLoader.getRenameWindow().isShowing() && MainLoader.getRenameWindow().wasAccepted()) {
 
             Main.window.requestFocus();
 
             // Check if this name already exists
-            String name = Main.renameWindow.getUserInput();
+            String name = MainLoader.getRenameWindow().getUserInput();
 
             // if can pass
             if (viewer.getItemsObservableList().stream()
@@ -289,12 +290,12 @@ public class LibraryMode extends BorderPane {
 
                     // Bidirectional binding with Instant Search
                     currentLib.getSmartController().getInstantSearch().selectedProperty()
-                            .bindBidirectional(Main.settingsWindow.getPlayListsSettingsController()
+                            .bindBidirectional(MainLoader.getSettingsWindow().getPlayListsSettingsController()
                                     .getInstantSearch().selectedProperty());
 
                     // Fix maximum per playlist
                     currentLib.getSmartController().setNewMaximumPerPage(
-                            Main.settingsWindow.getPlayListsSettingsController().getMaximumPerPlaylist(), false);
+                            MainLoader.getSettingsWindow().getPlayListsSettingsController().getMaximumPerPlaylist(), false);
                     currentLib.getSmartController().getReloadVBox().setVisible(false);
 
                     // Check if directly create library from Files
@@ -321,7 +322,7 @@ public class LibraryMode extends BorderPane {
         }
 
         // Disable the openLibrary when the user creates a new Library
-        if (!Main.renameWindow.isShowing())
+        if (!MainLoader.getRenameWindow().isShowing())
             openLibraryAfterCreation = false;
 
     }
@@ -424,7 +425,7 @@ public class LibraryMode extends BorderPane {
         renameLibrary.setOnAction(a -> renamePauseTransition.playFromStart());
 
         //Rename Pause
-        renamePauseTransition = new PauseTransition(Duration.millis(Main.renameWindow.windowCloseTime));
+        renamePauseTransition = new PauseTransition(Duration.millis(MainLoader.getRenameWindow().windowCloseTime));
         renamePauseTransition.setOnFinished(f -> ((Library) viewer.centerItemProperty().get()).renameLibrary(renameLibrary));
 
         // -- deleteLibrary
@@ -594,11 +595,11 @@ public class LibraryMode extends BorderPane {
         this.openLibraryAfterCreation = openLibraryAfterCreation;
 
         // Open rename window
-        Main.renameWindow.show("", owner, "Create " + (!openLibraryAfterCreation ? "" : "+ Open ") + "new Library",
+        MainLoader.getRenameWindow().show("", owner, "Create " + (!openLibraryAfterCreation ? "" : "+ Open ") + "new Library",
                 FileCategory.DIRECTORY, exactPositioning);
 
         // Add the showing listener
-        Main.renameWindow.showingProperty().addListener(creationInvalidator);
+        MainLoader.getRenameWindow().showingProperty().addListener(creationInvalidator);
     }
 
     /**

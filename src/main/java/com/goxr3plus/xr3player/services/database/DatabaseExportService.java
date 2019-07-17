@@ -12,11 +12,11 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.util.Duration;
-import com.goxr3plus.xr3player.application.Main;
 import com.goxr3plus.xr3player.enums.NotificationType;
 import com.goxr3plus.xr3player.utils.javafx.AlertTool;
 
@@ -72,8 +72,8 @@ public class DatabaseExportService extends Service<Boolean> {
 		setOnCancelled(c -> done());
 
 		// Set Cancel Action
-		Main.updateScreen.getCancelButton().setDisable(false);
-		Main.updateScreen.getCancelButton().setOnAction(a -> cancel());
+		MainLoader.getUpdateScreen().getCancelButton().setDisable(false);
+		MainLoader.getUpdateScreen().getCancelButton().setOnAction(a -> cancel());
 
 		// Restart the Service
 		restart();
@@ -104,9 +104,9 @@ public class DatabaseExportService extends Service<Boolean> {
 	 * Service done.
 	 */
 	private void done() {
-		Main.updateScreen.setVisible(false);
-		Main.updateScreen.getProgressBar().progressProperty().unbind();
-		Main.updateScreen.getCancelButton().setDisable(true);
+		MainLoader.getUpdateScreen().setVisible(false);
+		MainLoader.getUpdateScreen().getProgressBar().progressProperty().unbind();
+		MainLoader.getUpdateScreen().getCancelButton().setDisable(true);
 
 	}
 
@@ -136,7 +136,7 @@ public class DatabaseExportService extends Service<Boolean> {
 							break;
 
 						// Refresh the label Text
-						Platform.runLater(() -> Main.updateScreen.getLabel().setText("OUT:" + file));
+						Platform.runLater(() -> MainLoader.getUpdateScreen().getLabel().setText("OUT:" + file));
 
 						// Create zipEntry
 						zos.putNextEntry(new ZipEntry(file));

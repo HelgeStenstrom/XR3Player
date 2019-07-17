@@ -8,6 +8,7 @@ import java.util.concurrent.Executors;
 
 import com.goxr3plus.streamplayer.stream.ThreadFactoryWithNamePrefix;
 import com.goxr3plus.xr3player.application.Main;
+import com.goxr3plus.xr3player.application.MainLoader;
 import com.goxr3plus.xr3player.controllers.chromium.WebBrowserController;
 import com.goxr3plus.xr3player.controllers.chromium.WebBrowserTabController;
 import com.goxr3plus.xr3player.controllers.general.TopBar.WindowMode;
@@ -65,7 +66,7 @@ public class ChromiumUpdaterService {
 
 				for (;; Thread.sleep(1000)) {
 
-					if (Main.topBar.getWindowMode() == WindowMode.WEBMODE) {
+					if (MainLoader.getTopBar().getWindowMode() == WindowMode.WEBMODE) {
 						checkTabsSound();
 						// System.out.println(threadName + " entered if statement")
 					}
@@ -83,12 +84,12 @@ public class ChromiumUpdaterService {
 
 					// Main Mode
 					boolean muted = Main.xPlayersList.getXPlayerController(0).isMuteButtonSelected();
-					Main.sideBar.getMainModeStackedFont().getChildren().get(1).setVisible(!muted);
+					MainLoader.getSideBar().getMainModeStackedFont().getChildren().get(1).setVisible(!muted);
 
 					// DJ Mode
 					muted = (Main.xPlayersList.getXPlayerController(1).isMuteButtonSelected())
 							&& (Main.xPlayersList.getXPlayerController(2).isMuteButtonSelected());
-					Main.sideBar.getDjModeStackedFont().getChildren().get(1).setVisible(!muted);
+					MainLoader.getSideBar().getDjModeStackedFont().getChildren().get(1).setVisible(!muted);
 
 					// Browser Mode
 					final boolean notMuted = webBrowserController.getTabPane().getTabs().stream().filter(tab -> {
@@ -97,7 +98,7 @@ public class ChromiumUpdaterService {
 						// Is audio not muted?
 						return !tabController.getBrowser().isAudioMuted();
 					}).findFirst().isPresent();
-					Main.sideBar.getBrowserStackedFont().getChildren().get(1).setVisible(notMuted);
+					MainLoader.getSideBar().getBrowserStackedFont().getChildren().get(1).setVisible(notMuted);
 
 				}
 

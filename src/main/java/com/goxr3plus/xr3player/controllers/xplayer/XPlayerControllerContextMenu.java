@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -178,8 +179,8 @@ public class XPlayerControllerContextMenu extends ContextMenu {
 	 * @param url
 	 */
 	private void openWebSite(String url) {
-		Main.webBrowser.createTabAndSelect(url);
-		Main.topBar.goMode(WindowMode.WEBMODE);
+		MainLoader.getWebBrowser().createTabAndSelect(url);
+		MainLoader.getTopBar().goMode(WindowMode.WEBMODE);
 	}
 
 	/**
@@ -194,7 +195,7 @@ public class XPlayerControllerContextMenu extends ContextMenu {
 		} else if (source == showFile) {
 			IOAction.openFileInExplorer(absoluteFilePath);
 		} else if (source == editFileInfo)
-			Main.tagWindow.openAudio(absoluteFilePath, TagTabCategory.BASICINFO, true);
+			MainLoader.getTagWindow().openAudio(absoluteFilePath, TagTabCategory.BASICINFO, true);
 
 	}
 
