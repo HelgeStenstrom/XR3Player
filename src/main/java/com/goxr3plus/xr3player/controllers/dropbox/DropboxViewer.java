@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import org.controlsfx.control.BreadCrumbBar;
 
 import com.jfoenix.controls.JFXButton;
@@ -434,26 +435,26 @@ public class DropboxViewer extends StackPane {
 		createFolder.setOnAction(a -> {
 
 			// Show the window
-			Main.renameWindow.show("", createFolder, "Create Dropbox Folder", FileCategory.FILE);
+			MainLoader.getRenameWindow().show("", createFolder, "Create Dropbox Folder", FileCategory.FILE);
 
 			// When the Rename Window is closed do the rename
-			Main.renameWindow.showingProperty().addListener(new InvalidationListener() {
+			MainLoader.getRenameWindow().showingProperty().addListener(new InvalidationListener() {
 
 				@Override
 				public void invalidated(final Observable observable) {
 
 					// Remove the Listener
-					Main.renameWindow.showingProperty().removeListener(this);
+					MainLoader.getRenameWindow().showingProperty().removeListener(this);
 
 					// !Showing
-					if (!Main.renameWindow.isShowing()) {
+					if (!MainLoader.getRenameWindow().isShowing()) {
 
 						// !XPressed && // Old name != New name
-						if (Main.renameWindow.wasAccepted()) {
+						if (MainLoader.getRenameWindow().wasAccepted()) {
 
 							// Try to create
 							getDropBoxService().createFolder(getDropBoxService().getCurrentPath() + "/"
-									+ Main.renameWindow.getInputField().getText());
+									+ MainLoader.getRenameWindow().getInputField().getText());
 
 						}
 
@@ -664,16 +665,16 @@ public class DropboxViewer extends StackPane {
 	public void renameFile(final DropboxFile dropboxFile, final Node node) {
 
 		// Show Rename Window
-		Main.renameWindow.show(IOInfo.getFileTitle(dropboxFile.getMetadata().getName()), node, "Media Renaming",
+		MainLoader.getRenameWindow().show(IOInfo.getFileTitle(dropboxFile.getMetadata().getName()), node, "Media Renaming",
 				FileCategory.FILE);
 		final String oldName = dropboxFile.getMetadata().getName();
 
 		// Bind
-		dropboxFile.titleProperty().bind(Main.renameWindow.getInputField().textProperty().concat(
+		dropboxFile.titleProperty().bind(MainLoader.getRenameWindow().getInputField().textProperty().concat(
 				!dropboxFile.isFile() ? "" : "." + IOInfo.getFileExtension(dropboxFile.getMetadata().getName())));
 
 		// When the Rename Window is closed do the rename
-		Main.renameWindow.showingProperty().addListener(new InvalidationListener() {
+		MainLoader.getRenameWindow().showingProperty().addListener(new InvalidationListener() {
 			/**
 			 * [[SuppressWarningsSpartan]]
 			 */
@@ -681,19 +682,19 @@ public class DropboxViewer extends StackPane {
 			public void invalidated(final Observable observable) {
 
 				// Remove the Listener
-				Main.renameWindow.showingProperty().removeListener(this);
+				MainLoader.getRenameWindow().showingProperty().removeListener(this);
 
 				// !Showing
-				if (!Main.renameWindow.isShowing()) {
+				if (!MainLoader.getRenameWindow().isShowing()) {
 
 					// Remove Binding
 					dropboxFile.titleProperty().unbind();
 
-					final String newName = Main.renameWindow.getInputField().getText() + (dropboxFile.isDirectory() ? ""
+					final String newName = MainLoader.getRenameWindow().getInputField().getText() + (dropboxFile.isDirectory() ? ""
 							: "." + IOInfo.getFileExtension(dropboxFile.getMetadata().getName()));
 
 					// !XPressed && // Old name != New name
-					if (Main.renameWindow.wasAccepted() && !oldName.equals(newName)) {
+					if (MainLoader.getRenameWindow().wasAccepted() && !oldName.equals(newName)) {
 						final String parent = new File(dropboxFile.getMetadata().getPathLower()).getParent();
 
 						// Try to do it

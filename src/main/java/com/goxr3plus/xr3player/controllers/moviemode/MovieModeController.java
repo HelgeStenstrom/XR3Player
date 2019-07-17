@@ -2,13 +2,13 @@ package com.goxr3plus.xr3player.controllers.moviemode;
 
 import java.io.IOException;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
-import com.goxr3plus.xr3player.application.Main;
 import com.goxr3plus.xr3player.controllers.general.TopBar.WindowMode;
 import com.goxr3plus.xr3player.utils.general.InfoTool;
 
@@ -55,9 +55,9 @@ public class MovieModeController extends BorderPane {
 		imageView1.fitWidthProperty().bind(this.widthProperty());
 		imageView1.fitHeightProperty().bind(this.heightProperty());
 		stack1.setOnMouseReleased(m -> {
-			Main.webBrowser.addNewTabOnTheEnd("https://www1.fmovies.to/movies");
-			Main.topBar.goMode(WindowMode.WEBMODE);
-			Main.webBrowser.getTabPane().getSelectionModel().selectLast();
+			MainLoader.getWebBrowser().addNewTabOnTheEnd("https://www1.fmovies.to/movies");
+			MainLoader.getTopBar().goMode(WindowMode.WEBMODE);
+			MainLoader.getWebBrowser().getTabPane().getSelectionModel().selectLast();
 		});
 	}
 

@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.goxr3plus.xr3player.application.Main;
+import com.goxr3plus.xr3player.application.MainLoader;
 import com.goxr3plus.xr3player.controllers.smartcontroller.PlayContextMenu;
 import com.goxr3plus.xr3player.controllers.smartcontroller.ShopContextMenu;
 import com.goxr3plus.xr3player.enums.TagTabCategory;
@@ -175,9 +176,9 @@ public class TreeViewContextMenu extends ContextMenu {
 		else if (source == copy)
 			JavaFXTool.setClipBoard(Arrays.asList(new File(treeItem.getAbsoluteFilePath())));
 		else if (source == editFileInfo)
-			Main.tagWindow.openAudio(treeItem.getAbsoluteFilePath(), TagTabCategory.BASICINFO, true);
+			MainLoader.getTagWindow().openAudio(treeItem.getAbsoluteFilePath(), TagTabCategory.BASICINFO, true);
 		else if (source == rename)
-			treeItem.rename(Main.topBar);
+			treeItem.rename(MainLoader.getTopBar());
 	}
 
 	/**

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -198,12 +199,12 @@ public class Library extends StackPane {
         public void invalidated(final Observable observable) {
 
             ReadOnlyBooleanProperty p1;
-            p1 = Main.renameWindow.showingProperty();
+            p1 = MainLoader.getRenameWindow().showingProperty();
             p1.removeListener(this);
             // !Showing
-            if (!Main.renameWindow.isShowing()) {
+            if (!MainLoader.getRenameWindow().isShowing()) {
 
-                final String oldName = getLibraryName(), newName = Main.renameWindow.getUserInput();
+                final String oldName = getLibraryName(), newName = MainLoader.getRenameWindow().getUserInput();
                 boolean duplicate = false;
 
                 try {
@@ -212,7 +213,7 @@ public class Library extends StackPane {
                     nameLabel.textProperty().unbind();
 
                     // !XPressed && Old name !=newName
-                    if (Main.renameWindow.wasAccepted() && !libraryName.equals(newName)) {
+                    if (MainLoader.getRenameWindow().wasAccepted() && !libraryName.equals(newName)) {
 
                         // duplicate?
                         if (!(duplicate = Main.libraryMode.viewer.getItemsObservableList().stream()
@@ -264,7 +265,7 @@ public class Library extends StackPane {
 
                     // Rename Tab + Unbind Tab textProperty
                     if (isOpened()) {
-                        if (Main.renameWindow.wasAccepted() && !newName.equals(oldName) && !duplicate)
+                        if (MainLoader.getRenameWindow().wasAccepted() && !newName.equals(oldName) && !duplicate)
                             Main.libraryMode.openedLibrariesViewer.renameTab(oldName, getLibraryName());
 
                         Main.libraryMode.openedLibrariesViewer.getTab(getLibraryName()).getTooltip().textProperty()
@@ -275,7 +276,7 @@ public class Library extends StackPane {
                     controller.workOnProgress = WorkOnProgress.NONE;
 
                     // commit
-                    if (Main.renameWindow.wasAccepted() && !newName.equals(oldName) && !duplicate)
+                    if (MainLoader.getRenameWindow().wasAccepted() && !newName.equals(oldName) && !duplicate)
                         Main.dbManager.commit();
                 }
 
@@ -493,7 +494,7 @@ public class Library extends StackPane {
 
         // -----RatingLabel
         ratingLabel.visibleProperty()
-                .bind(Main.settingsWindow.getLibrariesSettingsController().getShowWidgets().selectedProperty());
+                .bind(MainLoader.getSettingsWindow().getLibrariesSettingsController().getShowWidgets().selectedProperty());
         ratingLabel.textProperty().bind(starsProperty().asString());
         ratingLabel.setOnMouseReleased(m -> {
             if (m.getButton() == MouseButton.PRIMARY
@@ -509,7 +510,7 @@ public class Library extends StackPane {
 
         // ----DescriptionLabel
         descriptionLabel.visibleProperty().bind(description.isEmpty().not()
-                .and(Main.settingsWindow.getLibrariesSettingsController().getShowWidgets().selectedProperty()));
+                .and(MainLoader.getSettingsWindow().getLibrariesSettingsController().getShowWidgets().selectedProperty()));
         descriptionLabel.setOnMouseReleased(informationLabel.getOnMouseReleased());
 
         // ----totalItemsLabel
@@ -521,7 +522,7 @@ public class Library extends StackPane {
         totalItemsLabel.textProperty()
                 .addListener((observable, oldValue, newValue) -> Main.libraryMode.calculateEmptyLibraries());
         totalItemsLabel.visibleProperty()
-                .bind(Main.settingsWindow.getLibrariesSettingsController().getShowWidgets().selectedProperty());
+                .bind(MainLoader.getSettingsWindow().getLibrariesSettingsController().getShowWidgets().selectedProperty());
 
         // I run this Thread to calculate the total entries of this library
         // because if the library is not opened they are not calculated
@@ -792,7 +793,7 @@ public class Library extends StackPane {
         controller.workOnProgress = WorkOnProgress.RENAMING_LIBRARY;
 
         // Open the Window
-        Main.renameWindow.show(getLibraryName(), n, "Library Renaming", FileCategory.DIRECTORY);
+        MainLoader.getRenameWindow().show(getLibraryName(), n, "Library Renaming", FileCategory.DIRECTORY);
 
         // Bind 1
         final Tab tab = Main.libraryMode.openedLibrariesViewer.getTab(getLibraryName());
@@ -800,10 +801,10 @@ public class Library extends StackPane {
             tab.getTooltip().textProperty().bind(nameLabel.textProperty());
 
         // Bind 2
-        nameLabel.textProperty().bind(Main.renameWindow.getInputField().textProperty());
+        nameLabel.textProperty().bind(MainLoader.getRenameWindow().getInputField().textProperty());
 
         // Add Invalidation Listener
-        Main.renameWindow.showingProperty().addListener(renameInvalidator);
+        MainLoader.getRenameWindow().showingProperty().addListener(renameInvalidator);
 
     }
 
@@ -819,15 +820,15 @@ public class Library extends StackPane {
 
         // Bind
         Main.libraryMode.libraryInformation.getStarsLabel().textProperty()
-                .bind(Main.starWindow.starsProperty().asString());
+                .bind(MainLoader.getStarWindow().starsProperty().asString());
 
-        Main.starWindow.show(getLibraryName(), starsProperty().get(), n);
+        MainLoader.getStarWindow().show(getLibraryName(), starsProperty().get(), n);
 
         // Keep a reference to the previous stars
         final double previousStars = stars.get();
 
         // Bind
-        stars.bind(Main.starWindow.starsProperty());
+        stars.bind(MainLoader.getStarWindow().starsProperty());
 
         /***
          * This InvalidationListener is used when i want to change the stars of the
@@ -838,20 +839,20 @@ public class Library extends StackPane {
             public void invalidated(final Observable o) {
 
                 // Remove the listener
-                Main.starWindow.getWindow().showingProperty().removeListener(this);
+                MainLoader.getStarWindow().getWindow().showingProperty().removeListener(this);
 
                 // Remove Binding from Stars
                 stars.unbind();
 
                 // if !showing
-                if (!Main.starWindow.getWindow().isShowing()) {
+                if (!MainLoader.getStarWindow().getWindow().isShowing()) {
 
                     // Unbind
                     Main.libraryMode.libraryInformation.getStarsLabel().textProperty().unbind();
 
                     // Was accepted
-                    if (Main.starWindow.wasAccepted())
-                        updateStars(Main.starWindow.getStars());
+                    if (MainLoader.getStarWindow().wasAccepted())
+                        updateStars(MainLoader.getStarWindow().getStars());
                     else
                         setStars(previousStars);
                 }
@@ -860,7 +861,7 @@ public class Library extends StackPane {
         };
 
         // Add Invalidation Listener
-        Main.starWindow.getWindow().showingProperty().addListener(updateStarsInvalidation);
+        MainLoader.getStarWindow().getWindow().showingProperty().addListener(updateStarsInvalidation);
 
     }
 

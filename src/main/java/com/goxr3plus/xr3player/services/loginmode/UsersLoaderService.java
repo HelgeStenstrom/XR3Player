@@ -9,6 +9,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
@@ -43,9 +44,9 @@ public class UsersLoaderService extends Service<Boolean> {
 			return;
 
 		// Bindings
-		Main.updateScreen.setVisible(true);
-		Main.updateScreen.getProgressBar().progressProperty().bind(progressProperty());
-		Main.updateScreen.getLabel().setText("Loading....");
+		MainLoader.getUpdateScreen().setVisible(true);
+		MainLoader.getUpdateScreen().getProgressBar().progressProperty().bind(progressProperty());
+		MainLoader.getUpdateScreen().getLabel().setText("Loading....");
 
 		// Start
 		super.start();
@@ -60,8 +61,8 @@ public class UsersLoaderService extends Service<Boolean> {
 		AlertTool.showNotification("Welcome :)", null, Duration.seconds(4), NotificationType.SUCCESS);
 
 		// Bindings
-		Main.updateScreen.getProgressBar().progressProperty().unbind();
-		Main.updateScreen.setVisible(false);
+		MainLoader.getUpdateScreen().getProgressBar().progressProperty().unbind();
+		MainLoader.getUpdateScreen().setVisible(false);
 	}
 
 	/*

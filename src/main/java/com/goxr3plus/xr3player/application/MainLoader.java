@@ -66,7 +66,6 @@ import static com.goxr3plus.xr3player.application.Main.borderlessScene;
 import static com.goxr3plus.xr3player.application.Main.libraryMode;
 import static com.goxr3plus.xr3player.application.Main.loginMode;
 import static com.goxr3plus.xr3player.application.Main.root;
-import static com.goxr3plus.xr3player.application.Main.welcomeScreen;
 import static com.goxr3plus.xr3player.application.Main.window;
 
 //import main.java.com.goxr3plus.xr3capture.application.CaptureWindow;
@@ -75,6 +74,91 @@ public class MainLoader {
 
     private static final int screenMinWidth = 800;
     private static final int screenMinHeight = 600;
+    private static MediaDeleteWindow mediaDeleteWindow;
+    /**
+     * The star window.
+     */
+    private static StarWindow starWindow;
+    /**
+     * The rename window.
+     */
+    private static RenameWindow renameWindow;
+    /**
+     * The rename window.
+     */
+    private static EmotionsWindow emotionsWindow;
+    /**
+     * Audio Tagging Window
+     */
+    private static TagWindow tagWindow;
+    private static MediaSearchWindow mediaSearchWindow;
+    /**
+     * This window is being used to export files from the application to the outside
+     * world
+     */
+    private static ExportWindowController exportWindow;
+    /**
+     * The About Window of the Application
+     */
+    private static AboutWindow aboutWindow;
+    /**
+     * The console Window of the Application
+     */
+    private static ConsoleWindowController consoleWindow;
+    /**
+     * This Window contains the settings for the whole application
+     */
+    private static ApplicationSettingsController settingsWindow;
+    /**
+     * This class is used to capture the computer Screen or a part of it [ Check
+     * XR3Capture package]
+     */
+//	public static CaptureWindow captureWindow;
+
+    private static UpdateWindow updateWindow;
+    /**
+     * The Top Bar of the Application
+     */
+    private static TopBar topBar;
+    /**
+     * The Bottom Bar of the Application
+     */
+    private static BottomBar bottomBar;
+    /**
+     * The Side Bar of The Application
+     */
+    private static SideBar sideBar;
+    /**
+     * Application Update Screen
+     */
+    private static MainLoadingScreen updateScreen;
+    /**
+     * The TreeView of DJMode
+     */
+    private static TreeViewManager treeManager;
+    private static MediaInformation mediaInformation;
+    private static TreeViewContextMenu treeViewContextMenu;
+    /**
+     * The Constant songsContextMenu.
+     */
+    private static MediaContextMenu songsContextMenu;
+    /**
+     * The Constant songsContextMenu.
+     */
+    private static ShopContextMenu shopContextMenu;
+    /**
+     * The Constant EmotionListsController.
+     */
+    private static EmotionListsController emotionListsController;
+    /**
+     * The WebBrowser of the Application
+     */
+    private static WebBrowserController webBrowser;
+    /**
+     * Used to provide ui for drag and view
+     */
+    private static DragViewer dragViewer;
+    private static WelcomeScreen welcomeScreen;
 
     static void startPart0() {
 
@@ -102,8 +186,8 @@ public class MainLoader {
         borderlessScene.setTransparentWindowStyle(
                 "-fx-background-color:rgb(0,0,0,0.7); -fx-border-color:firebrick; -fx-border-width:2px;");
         borderlessScene.setMoveControl(loginMode.getXr3PlayerLabel());
-        borderlessScene.setMoveControl(Main.topBar.getXr3Label());
-        borderlessScene.setMoveControl(Main.welcomeScreen.getTopHBox());
+        borderlessScene.setMoveControl(topBar.getXr3Label());
+        borderlessScene.setMoveControl(welcomeScreen.getTopHBox());
         window.setScene(borderlessScene);
         window.show();
         window.close();
@@ -156,7 +240,7 @@ public class MainLoader {
         //window.setIconified(true);
 
         // Check for updates
-        Main.updateWindow.searchForUpdates(false);
+        updateWindow.searchForUpdates(false);
 
         // XR3AutoUpdater exit message
         Platform.setImplicitExit(false);
@@ -171,40 +255,40 @@ public class MainLoader {
         // ----------------START: The below have not dependencies on other
         // ---------------------------------//
 
-        Main.welcomeScreen = new WelcomeScreen();
+        welcomeScreen = new WelcomeScreen();
 
-        Main.mediaDeleteWindow = new MediaDeleteWindow();
+        mediaDeleteWindow = new MediaDeleteWindow();
 
         /* The star window. */
-        Main.starWindow = new StarWindow();
+        starWindow = new StarWindow();
 
         /* The rename window. */
-        Main.renameWindow = new RenameWindow();
+        renameWindow = new RenameWindow();
 
         /* The rename window. */
-        Main.emotionsWindow = new EmotionsWindow();
+        emotionsWindow = new EmotionsWindow();
 
         /*
           Audio Tagging Window
          */
-        Main.tagWindow = new TagWindow();
+        tagWindow = new TagWindow();
 
         /*
           This window is being used to export files from the application to the outside
           world
          */
-        Main.exportWindow = new ExportWindowController();
+        exportWindow = new ExportWindowController();
 
         /* The About Window of the Application */
-        Main.aboutWindow = new AboutWindow();
+        aboutWindow = new AboutWindow();
 
         /* The console Window of the Application */
-        Main.consoleWindow = new ConsoleWindowController();
+        consoleWindow = new ConsoleWindowController();
 
         /*
           This Window contains the settings for the whole application
          */
-        Main.settingsWindow = new ApplicationSettingsController();
+        settingsWindow = new ApplicationSettingsController();
 
         /*
           This class is used to capture the computer Screen or a part of it [ Check
@@ -212,41 +296,41 @@ public class MainLoader {
          */
 //        Main.captureWindow = new CaptureWindow();
 
-        Main.updateWindow = new UpdateWindow();
+        updateWindow = new UpdateWindow();
 
         //
 
         /* The Top Bar of the Application */
-        Main.topBar = new TopBar();
+        topBar = new TopBar();
 
         /* The Bottom Bar of the Application */
-        Main.bottomBar = new BottomBar();
+        bottomBar = new BottomBar();
 
         /* The Side Bar of The Application */
-        Main.sideBar = new SideBar();
+        sideBar = new SideBar();
 
         /* Application Update Screen */
-        Main.updateScreen = new MainLoadingScreen();
+        updateScreen = new MainLoadingScreen();
 
         /** The TreeView of DJMode */
-        Main.treeManager = new TreeViewManager();
+        treeManager = new TreeViewManager();
 
         /* The Constant advancedSearch. */
         // public static final AdvancedSearch advancedSearch = new AdvancedSearch()
 
-        Main.mediaInformation = new MediaInformation();
+        mediaInformation = new MediaInformation();
         //
 
-        Main.treeViewContextMenu = new TreeViewContextMenu();
+        treeViewContextMenu = new TreeViewContextMenu();
 
         /* The Constant songsContextMenu. */
-        Main.songsContextMenu = new MediaContextMenu();
-        Main.shopContextMenu = new ShopContextMenu();
+        songsContextMenu = new MediaContextMenu();
+        shopContextMenu = new ShopContextMenu();
 
         //
 
         /* The Constant EmotionListsController. */
-        Main.emotionListsController = new EmotionListsController();
+        emotionListsController = new EmotionListsController();
 
         //
 
@@ -264,7 +348,7 @@ public class MainLoader {
 
         Main.onlineMusicController = new OnlineMusicController();
 
-        Main.emotionsTabPane = new EmotionsTabPane(Main.emotionListsController);
+        Main.emotionsTabPane = new EmotionsTabPane(emotionListsController);
 
         Main.starredMediaList = new StarredMediaList();
 
@@ -294,9 +378,9 @@ public class MainLoader {
          */
         // specialJFXTabPane = new JFXTabPane();
 
-        Main.mediaSearchWindow = new MediaSearchWindow();
+        mediaSearchWindow = new MediaSearchWindow();
 
-        Main.dragViewer = new DragViewer();
+        dragViewer = new DragViewer();
         // --------------END: The below have dependencies on
         // others------------w------------
 
@@ -310,15 +394,15 @@ public class MainLoader {
     public static void startPart2() {
 
         // ---- InitOwners -------
-        Main.starWindow.getWindow().initOwner(window);
-        Main.renameWindow.getWindow().initOwner(window);
-        Main.emotionsWindow.getWindow().initOwner(window);
-        Main.exportWindow.getWindow().initOwner(window);
+        starWindow.getWindow().initOwner(window);
+        renameWindow.getWindow().initOwner(window);
+        emotionsWindow.getWindow().initOwner(window);
+        exportWindow.getWindow().initOwner(window);
 //        Main.consoleWindow.getWindow().initOwner(window);
-        Main.settingsWindow.getWindow().initOwner(window);
-        Main.aboutWindow.getWindow().initOwner(window);
-        Main.updateWindow.getWindow().initOwner(window);
-        Main.tagWindow.getWindow().initOwner(window);
+        settingsWindow.getWindow().initOwner(window);
+        aboutWindow.getWindow().initOwner(window);
+        updateWindow.getWindow().initOwner(window);
+        tagWindow.getWindow().initOwner(window);
 //        Main.captureWindow.getStage().initOwner(window);
 //        Main.captureWindow.settingsWindowController.getStage().initOwner(window);
 
@@ -332,15 +416,15 @@ public class MainLoader {
         loginMode.getBackgroundImageView().fitHeightProperty().bind(window.heightProperty());
 
         // ---------mediaSearchWindow ------------
-        Main.mediaSearchWindow.registerListeners(window, Main.topBar.getSearchField());
-        Main.topBar.getSearchField().setOnMouseReleased(m -> Main.mediaSearchWindow.recalculateAndshow(Main.topBar.getSearchField()));
+        mediaSearchWindow.registerListeners(window, topBar.getSearchField());
+        topBar.getSearchField().setOnMouseReleased(m -> mediaSearchWindow.recalculateAndshow(topBar.getSearchField()));
 
         // -------Root-----------
-        Main.topBar.addXR3LabelBinding();
+        topBar.addXR3LabelBinding();
         root.setVisible(false);
-        root.setTop(Main.topBar);
-        root.setLeft(Main.sideBar);
-        root.setBottom(Main.bottomBar);
+        root.setTop(topBar);
+        root.setLeft(sideBar);
+        root.setBottom(bottomBar);
         root.setCenter(Main.rootStackPane);
 
         // ----Create the SpecialJFXTabPane for Navigation between Modes
@@ -372,7 +456,7 @@ public class MainLoader {
             Platform.runLater(() -> {
 
                 // Chromium Web Browser
-                Main.webBrowser = new WebBrowserController();
+                webBrowser = new WebBrowserController();
 
                 // Dropbox Viewer
                 Main.dropBoxViewer = new DropboxViewer();
@@ -403,18 +487,18 @@ public class MainLoader {
         libraryMode.librariesSearcher.registerListeners(window);
 
         // ----------ApplicationStackPane---------
-        Main.applicationStackPane.getChildren().addAll(Main.dragViewer, root, loginMode, Main.updateScreen, Main.welcomeScreen);
+        Main.applicationStackPane.getChildren().addAll(dragViewer, root, loginMode, updateScreen, welcomeScreen);
 
         // ----------Load Application Users-------
         MainLoadUser.loadTheUsers();
 
         // ----------Bottom Bar----------------
-        Main.bottomBar.getKeyBindings().selectedProperty()
-                .bindBidirectional(Main.settingsWindow.getNativeKeyBindings().getKeyBindingsActive().selectedProperty());
+        bottomBar.getKeyBindings().selectedProperty()
+                .bindBidirectional(settingsWindow.getNativeKeyBindings().getKeyBindingsActive().selectedProperty());
         // bottomBar.getSpeechRecognitionToggle().selectedProperty().bindBidirectional(consoleWindow.getSpeechRecognition().getActivateSpeechRecognition().selectedProperty());
 
         // -------------User Image View----------
-        Main.sideBar.getUserImageView().imageProperty().bind(Main.userInfoMode.getUserImage().imageProperty());
+        sideBar.getUserImageView().imageProperty().bind(Main.userInfoMode.getUserImage().imageProperty());
 
     }
 
@@ -434,4 +518,155 @@ public class MainLoader {
         }
     }
 
+    public static MediaDeleteWindow getMediaDeleteWindow() {
+        return mediaDeleteWindow;
+    }
+
+
+    /**
+     * The star window.
+     */
+    public static StarWindow getStarWindow() {
+        return starWindow;
+    }
+
+    /**
+     * The rename window.
+     */
+    public static RenameWindow getRenameWindow() {
+        return renameWindow;
+    }
+
+    /**
+     * The rename window.
+     */
+    public static EmotionsWindow getEmotionsWindow() {
+        return emotionsWindow;
+    }
+
+    /**
+     * Audio Tagging Window
+     */
+    public static TagWindow getTagWindow() {
+        return tagWindow;
+    }
+
+    public static MediaSearchWindow getMediaSearchWindow() {
+        return mediaSearchWindow;
+    }
+
+    /**
+     * This window is being used to export files from the application to the outside
+     * world
+     */
+    public static ExportWindowController getExportWindow() {
+        return exportWindow;
+    }
+
+    /**
+     * The About Window of the Application
+     */
+    public static AboutWindow getAboutWindow() {
+        return aboutWindow;
+    }
+
+    /**
+     * The console Window of the Application
+     */
+    public static ConsoleWindowController getConsoleWindow() {
+        return consoleWindow;
+    }
+
+    /**
+     * This Window contains the settings for the whole application
+     */
+    public static ApplicationSettingsController getSettingsWindow() {
+        return settingsWindow;
+    }
+
+    /**
+     * This class is used to capture the computer Screen or a part of it [ Check
+     * XR3Capture package]
+     */
+    public static UpdateWindow getUpdateWindow() {
+        return updateWindow;
+    }
+
+    /**
+     * The Top Bar of the Application
+     */
+    public static TopBar getTopBar() {
+        return topBar;
+    }
+
+    /**
+     * The Bottom Bar of the Application
+     */
+    public static BottomBar getBottomBar() {
+        return bottomBar;
+    }
+
+    /**
+     * The Side Bar of The Application
+     */
+    public static SideBar getSideBar() {
+        return sideBar;
+    }
+
+    /**
+     * Application Update Screen
+     */
+    public static MainLoadingScreen getUpdateScreen() {
+        return updateScreen;
+    }
+
+    /**
+     * The TreeView of DJMode
+     */
+    public static TreeViewManager getTreeManager() {
+        return treeManager;
+    }
+
+    public static MediaInformation getMediaInformation() {
+        return mediaInformation;
+    }
+
+    public static TreeViewContextMenu getTreeViewContextMenu() {
+        return treeViewContextMenu;
+    }
+
+    /**
+     * The Constant songsContextMenu.
+     */
+    public static MediaContextMenu getSongsContextMenu() {
+        return songsContextMenu;
+    }
+
+    /**
+     * The Constant songsContextMenu.
+     */
+    public static ShopContextMenu getShopContextMenu() {
+        return shopContextMenu;
+    }
+
+    /**
+     * The Constant EmotionListsController.
+     */
+    public static EmotionListsController getEmotionListsController() {
+        return emotionListsController;
+    }
+
+    /**
+     * The WebBrowser of the Application
+     */
+    public static WebBrowserController getWebBrowser() {
+        return webBrowser;
+    }
+
+    /**
+     * Used to provide ui for drag and view
+     */
+    public static DragViewer getDragViewer() {
+        return dragViewer;
+    }
 }

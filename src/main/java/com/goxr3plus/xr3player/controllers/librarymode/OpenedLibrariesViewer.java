@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import com.jfoenix.controls.JFXButton;
@@ -242,7 +243,7 @@ public class OpenedLibrariesViewer extends StackPane {
 		// -fx-background-color:rgb(255,255,255,0.5); -fx-border-color:transparent;")
 		// tab.textProperty().bind(marquee.textProperty())
 		marquee.checkAnimationValidity(
-				Main.settingsWindow.getGeneralSettingsController().getHighGraphicsToggle().isSelected());
+				MainLoader.getSettingsWindow().getGeneralSettingsController().getHighGraphicsToggle().isSelected());
 
 		stack.getChildren().addAll(indicator, label);
 		stack.setManaged(false);

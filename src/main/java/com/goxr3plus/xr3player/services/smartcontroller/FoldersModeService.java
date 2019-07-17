@@ -17,6 +17,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.stream.Stream;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
@@ -70,7 +71,7 @@ public class FoldersModeService extends Service<Void> {
 				Set<String> set = new LinkedHashSet<>();
 
 				// Determine filesMode
-				switch (((Control) Main.settingsWindow.getPlayListsSettingsController().getWhichFilesToShowGenerally()
+				switch (((Control) MainLoader.getSettingsWindow().getPlayListsSettingsController().getWhichFilesToShowGenerally()
 						.getSelectedToggle()).getTooltip().getText()) {
 					case "1":
 						filesMode = FilesMode.SELECTED_MEDIA;

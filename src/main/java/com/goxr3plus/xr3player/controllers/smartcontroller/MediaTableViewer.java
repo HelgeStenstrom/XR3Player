@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import org.fxmisc.richtext.InlineCssTextArea;
 import org.kordamp.ikonli.javafx.FontIcon;
 import org.kordamp.ikonli.javafx.StackedFontIcon;
@@ -322,10 +323,10 @@ public class MediaTableViewer extends StackPane {
 			if (newValue != null && oldValue != newValue) {
 
 				// Synchronize with Media Information
-				Main.mediaInformation.updateInformation(newValue);
+				MainLoader.getMediaInformation().updateInformation(newValue);
 
 				// Check if selection is allowed
-				if (Main.settingsWindow.getPlayListsSettingsController().getSelectMatchingMediaViewItem()
+				if (MainLoader.getSettingsWindow().getPlayListsSettingsController().getSelectMatchingMediaViewItem()
 						.isSelected()) {
 					String path = newValue.getFilePath();
 
@@ -373,7 +374,7 @@ public class MediaTableViewer extends StackPane {
 					} // Secondary
 					else if (m.getButton() == MouseButton.SECONDARY
 							&& !tableView.getSelectionModel().getSelectedItems().isEmpty())
-						Main.songsContextMenu.showContextMenu(row.itemProperty().get(), smartController.getGenre(),
+						MainLoader.getSongsContextMenu().showContextMenu(row.itemProperty().get(), smartController.getGenre(),
 								m.getScreenX(), m.getScreenY(), smartController, row);
 				}
 			});
@@ -480,10 +481,10 @@ public class MediaTableViewer extends StackPane {
 			 */
 			private void updateEmotion(Media media, Node node) {
 				// Show the Window
-				Main.emotionsWindow.show(media.getFileName(), node);// getFileName()
+				MainLoader.getEmotionsWindow().show(media.getFileName(), node);// getFileName()
 
 				// Listener
-				Main.emotionsWindow.getWindow().showingProperty().addListener(new InvalidationListener() {
+				MainLoader.getEmotionsWindow().getWindow().showingProperty().addListener(new InvalidationListener() {
 					/**
 					 * [[SuppressWarningsSpartan]]
 					 */
@@ -491,14 +492,14 @@ public class MediaTableViewer extends StackPane {
 					public void invalidated(Observable o) {
 
 						// Remove the listener
-						Main.emotionsWindow.getWindow().showingProperty().removeListener(this);
+						MainLoader.getEmotionsWindow().getWindow().showingProperty().removeListener(this);
 
 						// !showing?
-						if (!Main.emotionsWindow.getWindow().isShowing() && Main.emotionsWindow.wasAccepted()) {
+						if (!MainLoader.getEmotionsWindow().getWindow().isShowing() && MainLoader.getEmotionsWindow().wasAccepted()) {
 
 							// Add it the one of the emotions list
-							new Thread(() -> Main.emotionListsController.makeEmotionDecisition(media.getFilePath(),
-									Main.emotionsWindow.getEmotion())).start();
+							new Thread(() -> MainLoader.getEmotionListsController().makeEmotionDecisition(media.getFilePath(),
+									MainLoader.getEmotionsWindow().getEmotion())).start();
 
 						}
 					}
@@ -540,7 +541,7 @@ public class MediaTableViewer extends StackPane {
 						}
 
 						// Now set the graphic
-						emotionButton.setGraphic(Main.emotionsWindow.getEmotionFontIcon(emotion, size));
+						emotionButton.setGraphic(MainLoader.getEmotionsWindow().getEmotionFontIcon(emotion, size));
 
 					}
 
@@ -855,7 +856,7 @@ public class MediaTableViewer extends StackPane {
 					else if (key.isControlDown() && code == KeyCode.I)
 						// More than 1 selected?
 						if (getSelectedCount() > 1)
-							Main.tagWindow
+							MainLoader.getTagWindow()
 									.openMultipleAudioFiles(
 											getSelectionModel().getSelectedItems().stream().map(Media::getFilePath)
 													.collect(Collectors
@@ -863,7 +864,7 @@ public class MediaTableViewer extends StackPane {
 											getSelectionModel().getSelectedItem().getFilePath());
 						// Only one file selected
 						else
-							Main.tagWindow.openAudio(getSelectionModel().getSelectedItem().getFilePath(),
+							MainLoader.getTagWindow().openAudio(getSelectionModel().getSelectedItem().getFilePath(),
 									TagTabCategory.BASICINFO, true);
 				}
 

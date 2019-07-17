@@ -12,6 +12,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
@@ -59,9 +60,9 @@ public class DatabaseImportService extends Service<Boolean> {
 						Duration.seconds(2), NotificationType.INFORMATION);
 
 				// Restart XR3Player
-				Main.updateScreen.getProgressBar().progressProperty().unbind();
-				Main.updateScreen.getProgressBar().setProgress(-1);
-				Main.updateScreen.getLabel().setText("Restarting....");
+				MainLoader.getUpdateScreen().getProgressBar().progressProperty().unbind();
+				MainLoader.getUpdateScreen().getProgressBar().setProgress(-1);
+				MainLoader.getUpdateScreen().getLabel().setText("Restarting....");
 				MainExit.restartTheApplication(false);
 			}
 
@@ -83,8 +84,8 @@ public class DatabaseImportService extends Service<Boolean> {
 	 * Done.
 	 */
 	private static void done() {
-		Main.updateScreen.setVisible(false);
-		Main.updateScreen.getProgressBar().progressProperty().unbind();
+		MainLoader.getUpdateScreen().setVisible(false);
+		MainLoader.getUpdateScreen().getProgressBar().progressProperty().unbind();
 	}
 
 	/**
@@ -97,7 +98,7 @@ public class DatabaseImportService extends Service<Boolean> {
 		reset();
 
 		// Set Cancel Action
-		Main.updateScreen.getCancelButton().setDisable(true);
+		MainLoader.getUpdateScreen().getCancelButton().setDisable(true);
 
 		// Restart the Service
 		restart();
@@ -176,7 +177,7 @@ public class DatabaseImportService extends Service<Boolean> {
 						File newFile = new File(outPutFolder + File.separator + fileName);
 
 						// Refresh the dataLabel text
-						Platform.runLater(() -> Main.updateScreen.getLabel().setText("In:" + newFile.getName()));
+						Platform.runLater(() -> MainLoader.getUpdateScreen().getLabel().setText("In:" + newFile.getName()));
 
 						// create all non exists folders else you will hit FileNotFoundException for
 						// compressed folder

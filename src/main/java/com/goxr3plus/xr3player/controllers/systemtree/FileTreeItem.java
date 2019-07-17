@@ -6,6 +6,7 @@ package com.goxr3plus.xr3player.controllers.systemtree;
 import java.io.File;
 import java.util.logging.Level;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import com.goxr3plus.xr3player.application.Main;
@@ -111,14 +112,14 @@ public class FileTreeItem extends TreeItem<String> {
 
 		// Open Window
 		String extension = "." + IOInfo.getFileExtension(getAbsoluteFilePath());
-		Main.renameWindow.show(IOInfo.getFileTitle(getAbsoluteFilePath()), node, "Media Renaming", FileCategory.FILE);
+		MainLoader.getRenameWindow().show(IOInfo.getFileTitle(getAbsoluteFilePath()), node, "Media Renaming", FileCategory.FILE);
 		String oldFilePath = getAbsoluteFilePath();
 
 		// Bind
-		valueProperty().bind(Main.renameWindow.getInputField().textProperty().concat(!isDirectory() ? extension : ""));
+		valueProperty().bind(MainLoader.getRenameWindow().getInputField().textProperty().concat(!isDirectory() ? extension : ""));
 
 		// When the Rename Window is closed do the rename
-		Main.renameWindow.showingProperty().addListener(new InvalidationListener() {
+		MainLoader.getRenameWindow().showingProperty().addListener(new InvalidationListener() {
 			/**
 			 * [[SuppressWarningsSpartan]]
 			 */
@@ -126,19 +127,19 @@ public class FileTreeItem extends TreeItem<String> {
 			public void invalidated(Observable observable) {
 
 				// Remove the Listener
-				Main.renameWindow.showingProperty().removeListener(this);
+				MainLoader.getRenameWindow().showingProperty().removeListener(this);
 
 				// !Showing
-				if (!Main.renameWindow.isShowing()) {
+				if (!MainLoader.getRenameWindow().isShowing()) {
 
 					// Remove Binding
 					valueProperty().unbind();
 
 					String newFilePath = new File(oldFilePath).getParent() + File.separator
-						+ Main.renameWindow.getInputField().getText() + (!isDirectory() ? extension : "");
+						+ MainLoader.getRenameWindow().getInputField().getText() + (!isDirectory() ? extension : "");
 
 					// !XPressed && // Old name != New name
-					if (Main.renameWindow.wasAccepted() && !getAbsoluteFilePath().equals(newFilePath)) {
+					if (MainLoader.getRenameWindow().wasAccepted() && !getAbsoluteFilePath().equals(newFilePath)) {
 
 						try {
 

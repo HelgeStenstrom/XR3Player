@@ -3,6 +3,7 @@ package com.goxr3plus.xr3player.controllers.general;
 import java.io.File;
 import java.io.IOException;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import org.kordamp.ikonli.javafx.FontIcon;
 import org.kordamp.ikonli.javafx.StackedFontIcon;
 
@@ -303,10 +304,10 @@ public class SideBar extends StackPane {
 		// ---------UPDATE ------------------------------
 
 		// checkForUpdates
-		applicationUpdate.setOnAction(a -> Main.updateWindow.searchForUpdates(true));
+		applicationUpdate.setOnAction(a -> MainLoader.getUpdateWindow().searchForUpdates(true));
 
 		// showApplicationInfo
-		showApplicationInfo.setOnAction(a -> Main.aboutWindow.show());
+		showApplicationInfo.setOnAction(a -> MainLoader.getAboutWindow().show());
 
 		// showManual
 		showManual.setOnAction(a -> IOAction
@@ -318,7 +319,7 @@ public class SideBar extends StackPane {
 		// -----------------------------------------
 
 		// applicationSettings
-		applicationSettings.setOnAction(a -> Main.settingsWindow.showWindow(SettingsTab.GENERERAL));
+		applicationSettings.setOnAction(a -> MainLoader.getSettingsWindow().showWindow(SettingsTab.GENERERAL));
 
 		// downloadYoutubePlaylist
 		downloadYoutubePlaylist.setOnAction(a -> NetworkingTool.openWebSite("http://www.youtubecomtomp3.com"));
@@ -331,7 +332,7 @@ public class SideBar extends StackPane {
 			.setOnAction(a -> NetworkingTool.openWebSite("https://www.onlinevideoconverter.com/en/video-converter"));
 
 		// applicationConsole
-		applicationConsole.setOnAction(a -> Main.consoleWindow.show());
+		applicationConsole.setOnAction(a -> MainLoader.getConsoleWindow().show());
 
 		// snapShot
 		snapshot.setDisable(true);
@@ -367,7 +368,7 @@ public class SideBar extends StackPane {
 		// modeTeam
 		modeTeam.selectedToggleProperty().addListener((observable, oldToggle, newToggle) -> {
 			if (newToggle == this.mainModeToggle) {
-				Main.topBar.goMode(WindowMode.MAINMODE);
+				MainLoader.getTopBar().goMode(WindowMode.MAINMODE);
 
 				// Fix things
 				Main.libraryMode.getDjModeStackPane().setVisible(false);
@@ -381,7 +382,7 @@ public class SideBar extends StackPane {
 				Main.libraryMode.getTopSplitPane().setDividerPositions(positions);
 
 			} else if (newToggle == this.djModeToggle) {
-				Main.topBar.goMode(WindowMode.MAINMODE);
+				MainLoader.getTopBar().goMode(WindowMode.MAINMODE);
 
 				// Fix things
 				Main.libraryMode.getDjModeStackPane().setVisible(true);
@@ -395,9 +396,9 @@ public class SideBar extends StackPane {
 				Main.libraryMode.getTopSplitPane().setDividerPositions(positions);
 
 			} else if (newToggle == this.userInfoToggle) {
-				Main.topBar.goMode(WindowMode.USERMODE);
+				MainLoader.getTopBar().goMode(WindowMode.USERMODE);
 			} else if (newToggle == this.browserToggle) {
-				Main.topBar.goMode(WindowMode.WEBMODE);
+				MainLoader.getTopBar().goMode(WindowMode.WEBMODE);
 //			} else if (newToggle == this.moviesToggle) {
 //				Main.topBar.goMode(WindowMode.MOVIEMODE);
 			}
@@ -473,7 +474,7 @@ public class SideBar extends StackPane {
 		browserVolumeButton.setOnAction(a -> {
 			final boolean mute = !browserStackedFont.getChildren().get(0).isVisible();
 			// Mute or Unmute webrowser tabs
-			Main.webBrowser.getTabPane().getTabs()
+			MainLoader.getWebBrowser().getTabPane().getTabs()
 				.forEach(tab -> ((WebBrowserTabController) tab.getContent()).getBrowser().setAudioMuted(mute));
 			browserStackedFont.getChildren().get(1).setVisible(!mute);
 		});
@@ -496,8 +497,8 @@ public class SideBar extends StackPane {
 			final File file = Main.specialChooser.selectDBFile(Main.window);
 			if (file != null) {
 				// Change the Scene View
-				Main.updateScreen.setVisible(true);
-				Main.updateScreen.getProgressBar().progressProperty().bind(unZipper.progressProperty());
+				MainLoader.getUpdateScreen().setVisible(true);
+				MainLoader.getUpdateScreen().getProgressBar().progressProperty().bind(unZipper.progressProperty());
 
 				// Import the new database
 				unZipper.importDataBase(file.getAbsolutePath());
@@ -516,8 +517,8 @@ public class SideBar extends StackPane {
 			if (file != null) {
 
 				// Change the Scene View
-				Main.updateScreen.setVisible(true);
-				Main.updateScreen.getProgressBar().progressProperty().bind(zipper.progressProperty());
+				MainLoader.getUpdateScreen().setVisible(true);
+				MainLoader.getUpdateScreen().getProgressBar().progressProperty().bind(zipper.progressProperty());
 
 				// Export the database
 				zipper.exportDataBase(file.getAbsolutePath(), DatabaseTool.getAbsoluteDatabasePathPlain());
@@ -544,10 +545,10 @@ public class SideBar extends StackPane {
 			IOAction.deleteFile(new File(DatabaseTool.getAbsoluteDatabasePathPlain()));
 
 			// Show Update Screen
-			Main.updateScreen.setVisible(true);
-			Main.updateScreen.getProgressBar().progressProperty().unbind();
-			Main.updateScreen.getProgressBar().setProgress(-1);
-			Main.updateScreen.getLabel().setText("Restarting....");
+			MainLoader.getUpdateScreen().setVisible(true);
+			MainLoader.getUpdateScreen().getProgressBar().progressProperty().unbind();
+			MainLoader.getUpdateScreen().getProgressBar().setProgress(-1);
+			MainLoader.getUpdateScreen().getLabel().setText("Restarting....");
 
 			// Exit the application
 			Main.canSaveData = false;

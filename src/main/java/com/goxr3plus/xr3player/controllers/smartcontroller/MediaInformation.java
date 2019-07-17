@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
@@ -30,7 +31,6 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
-import com.goxr3plus.xr3player.application.Main;
 import com.goxr3plus.xr3player.enums.FileLinkType;
 import com.goxr3plus.xr3player.enums.Genre;
 import com.goxr3plus.xr3player.enums.NotificationType;
@@ -232,11 +232,11 @@ public class MediaInformation extends StackPane {
 		imageView.visibleProperty().bind(imageView.imageProperty().isNotNull());
 
 		// mediaImageButton
-		mediaImageButton.setOnAction(m -> Main.tagWindow.openAudio(media == null ? null : media.getFilePath(),
+		mediaImageButton.setOnAction(m -> MainLoader.getTagWindow().openAudio(media == null ? null : media.getFilePath(),
 				TagTabCategory.ARTWORK, true));
 
 		// showMore
-		showMore.setOnAction(m -> Main.tagWindow.openAudio(media == null ? null : media.getFilePath(),
+		showMore.setOnAction(m -> MainLoader.getTagWindow().openAudio(media == null ? null : media.getFilePath(),
 				TagTabCategory.BASICINFO, true));
 
 	}

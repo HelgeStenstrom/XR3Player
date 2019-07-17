@@ -3,7 +3,7 @@
  */
 package com.goxr3plus.xr3player.xplayer.visualizer.presenter;
 
-import com.goxr3plus.xr3player.application.Main;
+import com.goxr3plus.xr3player.application.MainLoader;
 import com.goxr3plus.xr3player.controllers.xplayer.XPlayerController;
 import com.goxr3plus.xr3player.xplayer.visualizer.core.VisualizerDrawer;
 
@@ -191,8 +191,8 @@ abstract class Visualizer extends VisualizerDrawer {
 		public void handle(long nanos) {
 
 			// CHECK IF VISUALIZERS ARE ENABLED
-			if (Main.settingsWindow != null
-					&& !Main.settingsWindow.getGeneralSettingsController().getHighGraphicsToggle().isSelected())
+			if (MainLoader.getSettingsWindow() != null
+					&& !MainLoader.getSettingsWindow().getGeneralSettingsController().getHighGraphicsToggle().isSelected())
 				return;
 
 			if (previousTime == 0) {

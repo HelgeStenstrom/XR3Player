@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import javafx.application.Platform;
@@ -32,7 +33,6 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import com.goxr3plus.xr3player.application.Main;
 import com.goxr3plus.xr3player.controllers.settings.ApplicationSettingsController.SettingsTab;
 import com.goxr3plus.xr3player.controllers.systemtree.FileTreeItem;
 import com.goxr3plus.xr3player.services.smartcontroller.FoldersModeService;
@@ -249,8 +249,8 @@ public class SmartControllerFoldersMode extends StackPane {
 
 		// settings
 		settings.setOnAction(a -> {
-			Main.settingsWindow.getPlayListsSettingsController().getInnerTabPane().getSelectionModel().select(1);
-			Main.settingsWindow.showWindow(SettingsTab.PLAYLISTS);
+			MainLoader.getSettingsWindow().getPlayListsSettingsController().getInnerTabPane().getSelectionModel().select(1);
+			MainLoader.getSettingsWindow().showWindow(SettingsTab.PLAYLISTS);
 		});
 
 		// backToMedia
@@ -315,7 +315,7 @@ public class SmartControllerFoldersMode extends StackPane {
 					// directory?
 					if (mainPath.toFile().isDirectory()) {
 						try (DirectoryStream<Path> stream = Files.newDirectoryStream(mainPath)) {
-							boolean showOnlyFilesThatExistToPlaylist = ((Control) Main.settingsWindow
+							boolean showOnlyFilesThatExistToPlaylist = ((Control) MainLoader.getSettingsWindow()
 									.getPlayListsSettingsController().getFilesToShowUnderFolders().getSelectedToggle())
 											.getTooltip().getText().equals("1");
 
@@ -384,7 +384,7 @@ public class SmartControllerFoldersMode extends StackPane {
 			// Main.songsContextMenu.showContextMenu(row.itemProperty().get(),
 			// smartController.getGenre(), mouseEvent.getScreenX(), mouseEvent.getScreenY(),
 			// smartController, row);
-			Main.treeViewContextMenu.show(source, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+			MainLoader.getTreeViewContextMenu().show(source, mouseEvent.getScreenX(), mouseEvent.getScreenY());
 		}
 	}
 

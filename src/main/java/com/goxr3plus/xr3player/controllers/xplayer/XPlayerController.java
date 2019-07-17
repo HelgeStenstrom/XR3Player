@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import org.kordamp.ikonli.javafx.FontIcon;
 import org.kordamp.ikonli.javafx.StackedFontIcon;
 
@@ -550,7 +551,7 @@ public class XPlayerController extends StackPane {
 						}
 
 						// Check if XPlayer is already active
-						if (xPlayer.isPausedOrPlaying() && Main.settingsWindow.getxPlayersSettingsController()
+						if (xPlayer.isPausedOrPlaying() && MainLoader.getSettingsWindow().getxPlayersSettingsController()
 							.getAskSecurityQuestion().isSelected()) {
 							if (AlertTool.doQuestion("Abort Current Song",
 								"A song is already playing on this deck.\n Are you sure you want to replace it?",
@@ -780,7 +781,7 @@ public class XPlayerController extends StackPane {
 							}
 
 							// Check if XPlayer is already active
-							if (xPlayer.isPausedOrPlaying() && Main.settingsWindow.getxPlayersSettingsController()
+							if (xPlayer.isPausedOrPlaying() && MainLoader.getSettingsWindow().getxPlayersSettingsController()
 								.getAskSecurityQuestion().isSelected()) {
 								if (AlertTool.doQuestion("Abort Current Song",
 									"A song is already playing on this deck.\n Are you sure you want to replace it?",
@@ -831,7 +832,7 @@ public class XPlayerController extends StackPane {
 		smMediaTitle.setOnMouseClicked(m -> openAudioInExplorer());
 
 		// openMediaFileFolder
-		mediaTagImageButton.setOnAction(action -> Main.tagWindow.openAudio(xPlayerModel.songPathProperty().get(),
+		mediaTagImageButton.setOnAction(action -> MainLoader.getTagWindow().openAudio(xPlayerModel.songPathProperty().get(),
 			TagTabCategory.ARTWORK, true));
 		mediaTagImageButton.setOnDragDetected(audioDragEvent);
 
@@ -1097,10 +1098,10 @@ public class XPlayerController extends StackPane {
 		emotionsButton.setOnAction(a -> updateEmotion(emotionsButton));
 
 		// enableHighGraphics
-		enableHighGraphics.setOnAction(a -> Main.settingsWindow.showWindow(SettingsTab.GENERERAL));
+		enableHighGraphics.setOnAction(a -> MainLoader.getSettingsWindow().showWindow(SettingsTab.GENERERAL));
 
 		// =settings
-		settings.setOnAction(a -> Main.settingsWindow.showWindow(SettingsTab.XPLAYERS));
+		settings.setOnAction(a -> MainLoader.getSettingsWindow().showWindow(SettingsTab.XPLAYERS));
 
 		// smMinimizeVolume
 		smMinimizeVolume.setOnAction(a -> minimizeVolume());
@@ -1181,7 +1182,7 @@ public class XPlayerController extends StackPane {
 		// Is Player Playing?
 		if (!playService.isDiscImageNull() && xPlayer.isPlaying())
 			// Is discRotation allowed?
-			if (Main.settingsWindow.getxPlayersSettingsController().getAllowDiscRotation().isSelected())
+			if (MainLoader.getSettingsWindow().getxPlayersSettingsController().getAllowDiscRotation().isSelected())
 				disc.resumeRotation();
 			else
 				disc.stopRotation();
@@ -1224,7 +1225,7 @@ public class XPlayerController extends StackPane {
 	 * @param emotion
 	 */
 	public void changeEmotionImage(final Emotion emotion) {
-		Main.emotionsWindow.giveEmotionImageToButton(emotionsButton, emotion, 24);
+		MainLoader.getEmotionsWindow().giveEmotionImageToButton(emotionsButton, emotion, 24);
 	}
 
 	/**
@@ -1233,10 +1234,10 @@ public class XPlayerController extends StackPane {
 	public void updateEmotion(final Node node) {
 
 		// Show the Window
-		Main.emotionsWindow.show(IOInfo.getFileName(xPlayerModel.getSongPath()), node);
+		MainLoader.getEmotionsWindow().show(IOInfo.getFileName(xPlayerModel.getSongPath()), node);
 
 		// Listener
-		Main.emotionsWindow.getWindow().showingProperty().addListener(new InvalidationListener() {
+		MainLoader.getEmotionsWindow().getWindow().showingProperty().addListener(new InvalidationListener() {
 			/**
 			 * [[SuppressWarningsSpartan]]
 			 */
@@ -1244,14 +1245,14 @@ public class XPlayerController extends StackPane {
 			public void invalidated(final Observable o) {
 
 				// Remove the listener
-				Main.emotionsWindow.getWindow().showingProperty().removeListener(this);
+				MainLoader.getEmotionsWindow().getWindow().showingProperty().removeListener(this);
 
 				// !showing?
-				if (!Main.emotionsWindow.getWindow().isShowing() && Main.emotionsWindow.wasAccepted()) {
+				if (!MainLoader.getEmotionsWindow().getWindow().isShowing() && MainLoader.getEmotionsWindow().wasAccepted()) {
 
 					// Add it the one of the emotions list
-					new Thread(() -> Main.emotionListsController.makeEmotionDecisition(
-						xPlayerModel.songPathProperty().get(), Main.emotionsWindow.getEmotion())).start();
+					new Thread(() -> MainLoader.getEmotionListsController().makeEmotionDecisition(
+						xPlayerModel.songPathProperty().get(), MainLoader.getEmotionsWindow().getEmotion())).start();
 
 					// System.out.println(Main.emotionsWindow.getEmotion())
 
@@ -1482,7 +1483,7 @@ public class XPlayerController extends StackPane {
 		// Visualizer
 		visualizer = new XPlayerVisualizer(this, true);
 		visualizer
-			.setShowFPS(Main.settingsWindow.getxPlayersSettingsController().getShowFPS().selectedProperty().get());
+			.setShowFPS(MainLoader.getSettingsWindow().getxPlayersSettingsController().getShowFPS().selectedProperty().get());
 
 		// DjVisualizer
 		if (this.getKey() == 1 || this.getKey() == 2) {
@@ -2029,7 +2030,7 @@ public class XPlayerController extends StackPane {
 
 		// Start immediately?
 		if (!ignoreStartImmediately
-			&& !Main.settingsWindow.getxPlayersSettingsController().getStartImmediately().isSelected())
+			&& !MainLoader.getSettingsWindow().getxPlayersSettingsController().getStartImmediately().isSelected())
 			pause();
 		else {
 			play();

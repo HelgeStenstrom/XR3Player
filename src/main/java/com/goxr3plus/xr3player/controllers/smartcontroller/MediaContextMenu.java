@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -199,8 +200,8 @@ public class MediaContextMenu extends ContextMenu {
 		}
 
 		// Show it
-		show((Main.mediaSearchWindow.getWindow().isShowing() && Main.mediaSearchWindow.getWindow().isFocused())
-				? Main.mediaSearchWindow.getWindow()
+		show((MainLoader.getMediaSearchWindow().getWindow().isShowing() && MainLoader.getMediaSearchWindow().getWindow().isFocused())
+				? MainLoader.getMediaSearchWindow().getWindow()
 				: Main.window, x - super.getWidth(), y - 1);
 		previousGenre = genre;
 
@@ -238,8 +239,8 @@ public class MediaContextMenu extends ContextMenu {
 	 * @param url
 	 */
 	private void openWebSite(String url) {
-		Main.webBrowser.createTabAndSelect(url);
-		Main.topBar.goMode(WindowMode.WEBMODE);
+		MainLoader.getWebBrowser().createTabAndSelect(url);
+		MainLoader.getTopBar().goMode(WindowMode.WEBMODE);
 	}
 
 	/**
@@ -278,16 +279,16 @@ public class MediaContextMenu extends ContextMenu {
 		else if (source == editFileInfo) {
 			// More than 1 selected?
 			if (controller.getNormalModeMediaTableViewer().getSelectedCount() > 1)
-				Main.tagWindow.openMultipleAudioFiles(
+				MainLoader.getTagWindow().openMultipleAudioFiles(
 						controller.getNormalModeMediaTableViewer().getSelectionModel().getSelectedItems().stream()
 								.map(Media::getFilePath)
 								.collect(Collectors.toCollection(FXCollections::observableArrayList)),
 						controller.getNormalModeMediaTableViewer().getSelectionModel().getSelectedItem().getFilePath());
 			// Only one file selected
 			else
-				Main.tagWindow.openAudio(media.getFilePath(), TagTabCategory.BASICINFO, true);
+				MainLoader.getTagWindow().openAudio(media.getFilePath(), TagTabCategory.BASICINFO, true);
 		} else if (source == exportFiles) { // copyTo
-			Main.exportWindow.show(controller);
+			MainLoader.getExportWindow().show(controller);
 		} else {
 			try {
 

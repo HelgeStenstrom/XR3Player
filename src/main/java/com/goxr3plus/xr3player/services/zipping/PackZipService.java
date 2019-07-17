@@ -12,11 +12,11 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.util.Duration;
-import com.goxr3plus.xr3player.application.Main;
 import com.goxr3plus.xr3player.enums.NotificationType;
 import com.goxr3plus.xr3player.utils.javafx.AlertTool;
 
@@ -124,7 +124,7 @@ public class PackZipService extends Service<Boolean> {
 							break;
 
 						// Refresh the label Text
-						Platform.runLater(() -> Main.updateScreen.getLabel().setText("OUT:" + file));
+						Platform.runLater(() -> MainLoader.getUpdateScreen().getLabel().setText("OUT:" + file));
 
 						// Create zipEntry
 						zos.putNextEntry(new ZipEntry(file));

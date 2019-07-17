@@ -18,6 +18,7 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.stream.Stream;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
@@ -291,8 +292,8 @@ public class DatabaseManager {
 	 * This method loads the application database.
 	 */
 	public void loadApplicationDataBase() {
-		Main.updateScreen.setVisible(true);
-		Main.updateScreen.getProgressBar().progressProperty().bind(dataLoader.progressProperty());
+		MainLoader.getUpdateScreen().setVisible(true);
+		MainLoader.getUpdateScreen().getProgressBar().progressProperty().bind(dataLoader.progressProperty());
 		dataLoader.restart();
 	}
 
@@ -322,7 +323,7 @@ public class DatabaseManager {
 			setOnSucceeded(s -> {
 
 				// ----------------Do the animation with rectangles---------------------
-				Main.updateScreen.closeUpdateScreen();
+				MainLoader.getUpdateScreen().closeUpdateScreen();
 
 				// ----------------Final Settings---------------------
 				// update library viewer
@@ -331,20 +332,20 @@ public class DatabaseManager {
 				// ---------------Set the update Screen invisible---------------------
 				final PauseTransition pause1 = new PauseTransition(Duration.seconds(1));
 				pause1.setOnFinished(f -> {
-					Main.updateScreen.setVisible(false);
-					Main.updateScreen.getProgressBar().progressProperty().unbind();
+					MainLoader.getUpdateScreen().setVisible(false);
+					MainLoader.getUpdateScreen().getProgressBar().progressProperty().unbind();
 				});
 				pause1.playFromStart();
 
 				// Start important services
 				new MediaUpdaterService().start();
-				Main.webBrowser.startChromiumUpdaterService();
+				MainLoader.getWebBrowser().startChromiumUpdaterService();
 
 			});
 
 			// ---------------------if failed
 			setOnFailed(fail -> {
-				Main.updateScreen.getProgressBar().progressProperty().unbind();
+				MainLoader.getUpdateScreen().getProgressBar().progressProperty().unbind();
 				AlertTool.showNotification("Fatal Error!",
 						"DataLoader failed during loading dataBase!!Application will exit...", Duration.millis(1500),
 						NotificationType.ERROR);
@@ -369,7 +370,7 @@ public class DatabaseManager {
 						totalLibraries = dbCounter.getInt(1);
 
 						// Refresh the text
-						Platform.runLater(() -> Main.updateScreen.getLabel()
+						Platform.runLater(() -> MainLoader.getUpdateScreen().getLabel()
 								.setText("Loading Libraries....[ 0 / " + totalLibraries + " ]"));
 
 						// Kepp a List of all Libraries
@@ -406,7 +407,7 @@ public class DatabaseManager {
 
 							// Change Label Text
 							++counter[0];
-							Platform.runLater(() -> Main.updateScreen.getLabel()
+							Platform.runLater(() -> MainLoader.getUpdateScreen().getLabel()
 									.setText("Loading Libraries... [ " + counter[0] + " / " + totalLibraries + " ]"));
 
 						}
@@ -418,7 +419,7 @@ public class DatabaseManager {
 						Platform.runLater(() -> {
 
 							// Change Label Text
-							Main.updateScreen.getLabel().setText("Adding Libraries ...");
+							MainLoader.getUpdateScreen().getLabel().setText("Adding Libraries ...");
 
 							// Add all the Libraries to the Library Viewer
 							Main.libraryMode.viewer.addMultipleItems(libraries);
@@ -426,26 +427,26 @@ public class DatabaseManager {
 						});
 
 						// Load PlayerMediaList
-						Platform.runLater(() -> Main.updateScreen.getLabel().setText("Loading Emotion Lists..."));
+						Platform.runLater(() -> MainLoader.getUpdateScreen().getLabel().setText("Loading Emotion Lists..."));
 						Main.playedSongs.uploadFromDataBase();
 						Main.starredMediaList.uploadFromDataBase();
-						Main.emotionListsController.hatedMediaList.uploadFromDataBase();
-						Main.emotionListsController.dislikedMediaList.uploadFromDataBase();
-						Main.emotionListsController.likedMediaList.uploadFromDataBase();
-						Main.emotionListsController.lovedMediaList.uploadFromDataBase();
+						MainLoader.getEmotionListsController().hatedMediaList.uploadFromDataBase();
+						MainLoader.getEmotionListsController().dislikedMediaList.uploadFromDataBase();
+						MainLoader.getEmotionListsController().likedMediaList.uploadFromDataBase();
+						MainLoader.getEmotionListsController().lovedMediaList.uploadFromDataBase();
 
 						// -----------------------Load the application
 						// settings-------------------------------
 						final CountDownLatch countDown1 = new CountDownLatch(1);
 						Platform.runLater(() -> {
 							// Change label text
-							Main.updateScreen.getLabel().setText("Loading Settings...");
+							MainLoader.getUpdateScreen().getLabel().setText("Loading Settings...");
 
 							// Load application settings
 							ApplicationSettingsLoader.loadApplicationSettings();
 
 							// Change Label Text
-							Main.updateScreen.getLabel().setText("Loading Opened Libraries...");
+							MainLoader.getUpdateScreen().getLabel().setText("Loading Opened Libraries...");
 
 							// Count down
 							countDown1.countDown();
@@ -473,10 +474,10 @@ public class DatabaseManager {
 						Platform.runLater(() -> {
 
 							// Change Label Text
-							Platform.runLater(() -> Main.updateScreen.getLabel().setText("Loading Bindings..."));
+							Platform.runLater(() -> MainLoader.getUpdateScreen().getLabel().setText("Loading Bindings..."));
 
 							// Update the emotion smart controller
-							Main.emotionListsController
+							MainLoader.getEmotionListsController()
 									.updateSelectedSmartController(new boolean[]{true, true, true, true});
 
 							// Update the selected smart controller
@@ -492,20 +493,20 @@ public class DatabaseManager {
 
 							// For Search Window
 							Main.searchWindowSmartController.getInstantSearch().selectedProperty()
-									.bindBidirectional(Main.settingsWindow.getPlayListsSettingsController()
+									.bindBidirectional(MainLoader.getSettingsWindow().getPlayListsSettingsController()
 											.getInstantSearch().selectedProperty());
 
 							// For Libraries
 							Main.libraryMode.viewer.getItemsObservableList().stream()
 									.map(library -> ((Library) library).getSmartController())
 									.forEach(controller -> controller.getInstantSearch().selectedProperty()
-											.bindBidirectional(Main.settingsWindow.getPlayListsSettingsController()
+											.bindBidirectional(MainLoader.getSettingsWindow().getPlayListsSettingsController()
 													.getInstantSearch().selectedProperty()));
 
 							Stream<XPlayerController> cs1;
 							cs1 = Main.xPlayersList.getList().stream();
 							cs1.forEach(xPlayerController -> xPlayerController.getxPlayerPlayList().getSmartController()
-									.getInstantSearch().selectedProperty().bindBidirectional(Main.settingsWindow
+									.getInstantSearch().selectedProperty().bindBidirectional(MainLoader.getSettingsWindow()
 											.getPlayListsSettingsController().getInstantSearch().selectedProperty()));
 
 							// Load Saved DropBox Accounts

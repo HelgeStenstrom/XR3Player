@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.Properties;
 
 import com.goxr3plus.xr3player.application.Main;
+import com.goxr3plus.xr3player.application.MainLoader;
 import com.goxr3plus.xr3player.utils.javafx.JavaFXTool;
 import com.goxr3plus.xr3player.xplayer.visualizer.presenter.VisualizerWindowController.Type;
 
@@ -36,7 +37,7 @@ public class ApplicationSettingsLoader {
 			Properties settings = Main.dbManager.getPropertiesDb().getProperties();
 
 			// Restore all to default before loading the settings
-			Main.settingsWindow.restoreAll();
+			MainLoader.getSettingsWindow().restoreAll();
 
 			// ---------- Load all the settings from the config.properties
 			// --------------------
@@ -47,32 +48,32 @@ public class ApplicationSettingsLoader {
 
 			// ======================START OF KeyBindings-Settings======================
 
-			Optional.ofNullable(settings.getProperty("ShortCuts-KeyBindings")).ifPresent(s -> Main.settingsWindow
+			Optional.ofNullable(settings.getProperty("ShortCuts-KeyBindings")).ifPresent(s -> MainLoader.getSettingsWindow()
 					.getNativeKeyBindings().getKeyBindingsActive().setSelected(Boolean.parseBoolean(s)));
 
 			Optional.ofNullable(settings.getProperty("ShortCuts-SelectedPlayer"))
 					.ifPresent(s -> JavaFXTool.selectToggleOnIndex(
-							Main.settingsWindow.getNativeKeyBindings().getxPlayerSelected(), Integer.valueOf(s)));
+							MainLoader.getSettingsWindow().getNativeKeyBindings().getxPlayerSelected(), Integer.valueOf(s)));
 
 			// ======================START OF General-Settings======================
 
 			// -- High Graphics Mode
-			Main.settingsWindow.getGeneralSettingsController().getHighGraphicsToggle().setSelected(true);
-			Main.settingsWindow.getGeneralSettingsController().getHighGraphicsToggle().setSelected(false);
+			MainLoader.getSettingsWindow().getGeneralSettingsController().getHighGraphicsToggle().setSelected(true);
+			MainLoader.getSettingsWindow().getGeneralSettingsController().getHighGraphicsToggle().setSelected(false);
 
-			Optional.ofNullable(settings.getProperty("General-High-Graphics")).ifPresent(s -> Main.settingsWindow
+			Optional.ofNullable(settings.getProperty("General-High-Graphics")).ifPresent(s -> MainLoader.getSettingsWindow()
 					.getGeneralSettingsController().getHighGraphicsToggle().setSelected(Boolean.valueOf(s)));
 
 			// --SideBar side
 			Optional.ofNullable(settings.getProperty("General-SideBarSide"))
 					.ifPresent(s -> JavaFXTool.selectToggleOnIndex(
-							Main.settingsWindow.getGeneralSettingsController().getSideBarSideGroup(),
+							MainLoader.getSettingsWindow().getGeneralSettingsController().getSideBarSideGroup(),
 							Integer.valueOf(s)));
 
 			// --NotificationsPosition
 			Optional.ofNullable(settings.getProperty("General-NotificationsPosition"))
 					.ifPresent(s -> JavaFXTool.selectToogleWithText(
-							Main.settingsWindow.getGeneralSettingsController().getNotificationsPosition(), s));
+							MainLoader.getSettingsWindow().getGeneralSettingsController().getNotificationsPosition(), s));
 
 			// --LibraryMode
 			Main.playListModesSplitPane.updateSplitPaneDivider();
@@ -94,7 +95,7 @@ public class ApplicationSettingsLoader {
 
 			// ======================START OF Libraries-Settings======================
 
-			Optional.ofNullable(settings.getProperty("Libraries-ShowWidgets")).ifPresent(s -> Main.settingsWindow
+			Optional.ofNullable(settings.getProperty("Libraries-ShowWidgets")).ifPresent(s -> MainLoader.getSettingsWindow()
 					.getLibrariesSettingsController().getShowWidgets().setSelected(Boolean.parseBoolean(s)));
 
 			// ======================START OF Playlists-Settings======================
@@ -103,42 +104,42 @@ public class ApplicationSettingsLoader {
 
 			Optional.ofNullable(settings.getProperty("PlayLists-General-PlayedFilesDetection"))
 					.ifPresent(s -> JavaFXTool.selectToggleOnIndex(
-							Main.settingsWindow.getPlayListsSettingsController().getPlayedFilesDetectionGroup(),
+							MainLoader.getSettingsWindow().getPlayListsSettingsController().getPlayedFilesDetectionGroup(),
 							Integer.valueOf(s)));
 
 			Optional.ofNullable(settings.getProperty("PlayLists-General-TotalFilesShown"))
 					.ifPresent(s -> JavaFXTool.selectToggleOnIndex(
-							Main.settingsWindow.getPlayListsSettingsController().getTotalFilesShownGroup(),
+							MainLoader.getSettingsWindow().getPlayListsSettingsController().getTotalFilesShownGroup(),
 							Integer.valueOf(s)));
 
 			Optional.ofNullable(settings.getProperty("PlayLists-General-SelMatchMedViewItem"))
-					.ifPresent(s -> Main.settingsWindow.getPlayListsSettingsController()
+					.ifPresent(s -> MainLoader.getSettingsWindow().getPlayListsSettingsController()
 							.getSelectMatchingMediaViewItem().setSelected(Boolean.parseBoolean(s)));
 
 			// --Media Viewer SECTOR
 			Optional.ofNullable(settings.getProperty("PlayLists-MediaViewer-SelMatchPlaylistItem"))
-					.ifPresent(s -> Main.settingsWindow.getPlayListsSettingsController().getSelectMatchingPlaylistItem()
+					.ifPresent(s -> MainLoader.getSettingsWindow().getPlayListsSettingsController().getSelectMatchingPlaylistItem()
 							.setSelected(Boolean.parseBoolean(s)));
 
 			Optional.ofNullable(settings.getProperty("PlayLists-MediaViewer-ScrollToMatchPlaylistItem"))
-					.ifPresent(s -> Main.settingsWindow.getPlayListsSettingsController()
+					.ifPresent(s -> MainLoader.getSettingsWindow().getPlayListsSettingsController()
 							.getScrollToMatchingPlaylistItem().setSelected(Boolean.parseBoolean(s)));
 
 			// --Search SECTOR
 			Optional.ofNullable(settings.getProperty("PlayLists-Search-InstantSearch"))
-					.ifPresent(s -> Main.settingsWindow.getPlayListsSettingsController().getInstantSearch()
+					.ifPresent(s -> MainLoader.getSettingsWindow().getPlayListsSettingsController().getInstantSearch()
 							.setSelected(Boolean.parseBoolean(s)));
 
 			Optional.ofNullable(settings.getProperty("PlayLists-Search-FileSearchUsing"))
 					.ifPresent(s -> JavaFXTool.selectToggleOnIndex(
-							Main.settingsWindow.getPlayListsSettingsController().getFileSearchGroup(),
+							MainLoader.getSettingsWindow().getPlayListsSettingsController().getFileSearchGroup(),
 							Integer.valueOf(s)));
 
 			// --Folders Mode SECTOR
 			Optional.ofNullable(settings.getProperty("PlayLists-FoldersMode-WhichFilesToShowGenerally"))
 					.ifPresent(s -> {
 
-						ToggleGroup group = Main.settingsWindow.getPlayListsSettingsController()
+						ToggleGroup group = MainLoader.getSettingsWindow().getPlayListsSettingsController()
 								.getWhichFilesToShowGenerally();
 						group.getToggles().stream()
 								.filter(toggle -> ((Control) toggle).getTooltip().getText().equals(s)).findFirst()
@@ -148,7 +149,7 @@ public class ApplicationSettingsLoader {
 
 			Optional.ofNullable(settings.getProperty("PlayLists-FoldersMode-FilesToShowUnderFolders")).ifPresent(s -> {
 
-				ToggleGroup group = Main.settingsWindow.getPlayListsSettingsController().getFilesToShowUnderFolders();
+				ToggleGroup group = MainLoader.getSettingsWindow().getPlayListsSettingsController().getFilesToShowUnderFolders();
 				group.getToggles().stream().filter(toggle -> ((Control) toggle).getTooltip().getText().equals(s))
 						.findFirst().ifPresent(group::selectToggle);
 
@@ -157,29 +158,29 @@ public class ApplicationSettingsLoader {
 
 			// --General
 			Optional.ofNullable(settings.getProperty("XPlayers-General-AllowDiscRotation"))
-					.ifPresent(s -> Main.settingsWindow.getxPlayersSettingsController().getAllowDiscRotation()
+					.ifPresent(s -> MainLoader.getSettingsWindow().getxPlayersSettingsController().getAllowDiscRotation()
 							.setSelected(Boolean.parseBoolean(s)));
 
-			Optional.ofNullable(settings.getProperty("XPlayers-General-StartAtOnce")).ifPresent(s -> Main.settingsWindow
+			Optional.ofNullable(settings.getProperty("XPlayers-General-StartAtOnce")).ifPresent(s -> MainLoader.getSettingsWindow()
 					.getxPlayersSettingsController().getStartImmediately().setSelected(Boolean.parseBoolean(s)));
 
 			Optional.ofNullable(settings.getProperty("XPlayers-General-AskSecurityQuestion"))
-					.ifPresent(s -> Main.settingsWindow.getxPlayersSettingsController().getAskSecurityQuestion()
+					.ifPresent(s -> MainLoader.getSettingsWindow().getxPlayersSettingsController().getAskSecurityQuestion()
 							.setSelected(Boolean.parseBoolean(s)));
 
 			Optional.ofNullable(settings.getProperty("XPlayers-General-ShowPlayerNotifications"))
-					.ifPresent(s -> Main.settingsWindow.getxPlayersSettingsController().getShowPlayerNotifications()
+					.ifPresent(s -> MainLoader.getSettingsWindow().getxPlayersSettingsController().getShowPlayerNotifications()
 							.setSelected(Boolean.parseBoolean(s)));
 
 			Optional.ofNullable(settings.getProperty("XPlayers-General-SkipButtonSeconds"))
-					.ifPresent(s -> Main.settingsWindow.getxPlayersSettingsController().getSkipSlider()
+					.ifPresent(s -> MainLoader.getSettingsWindow().getxPlayersSettingsController().getSkipSlider()
 							.setValue(Integer.parseInt(s)));
 
 			// --Visualizer
 			Optional.ofNullable(settings.getProperty("XPlayers-Visualizer-ShowFPS")).ifPresent(s -> {
 
 				// Set the Value to the CheckBox
-				Main.settingsWindow.getxPlayersSettingsController().getShowFPS().setSelected(Boolean.parseBoolean(s));
+				MainLoader.getSettingsWindow().getxPlayersSettingsController().getShowFPS().setSelected(Boolean.parseBoolean(s));
 
 				// Update all the players
 				Main.xPlayersList.getList().forEach(

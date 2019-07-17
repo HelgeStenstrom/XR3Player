@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import org.controlsfx.control.textfield.TextFields;
 
 import javafx.application.Platform;
@@ -34,7 +35,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import com.goxr3plus.xr3player.application.Main;
 import com.goxr3plus.xr3player.enums.TagTabCategory;
 import com.goxr3plus.xr3player.services.systemtree.TreeViewService;
 import com.goxr3plus.xr3player.utils.general.ExtensionTool;
@@ -147,7 +147,7 @@ public class TreeViewManager extends StackPane {
 
 					// If it is an audio file
 					if (ExtensionTool.isAudio(absoluteFilePath))
-						Main.tagWindow.openAudio(absoluteFilePath, TagTabCategory.BASICINFO, true);
+						MainLoader.getTagWindow().openAudio(absoluteFilePath, TagTabCategory.BASICINFO, true);
 				});
 			}
 		});
@@ -294,7 +294,7 @@ public class TreeViewManager extends StackPane {
 			// source.setGraphic(new ImageView(SystemRoot.folderImage))
 
 		} else if (mouseEvent.getButton() == MouseButton.SECONDARY) {
-			Main.treeViewContextMenu.show(source, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+			MainLoader.getTreeViewContextMenu().show(source, mouseEvent.getScreenX(), mouseEvent.getScreenY());
 		}
 	}
 

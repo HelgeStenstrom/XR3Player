@@ -12,6 +12,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import org.apache.commons.io.FileUtils;
 
 import com.goxr3plus.streamplayer.stream.ThreadFactoryWithNamePrefix;
@@ -90,7 +91,7 @@ public class MediaUpdaterService {
 		try {
 
 			// Don't enter in case of
-			if (Main.topBar.getWindowMode() == WindowMode.MAINMODE
+			if (MainLoader.getTopBar().getWindowMode() == WindowMode.MAINMODE
 					|| Main.libraryMode.getDjModeStackPane().isVisible()) {
 
 				// Selected + Opened Library
@@ -121,7 +122,7 @@ public class MediaUpdaterService {
 				// -------------
 
 				// Search Window
-				if (Main.mediaSearchWindow.getWindow().isShowing()) {
+				if (MainLoader.getMediaSearchWindow().getWindow().isShowing()) {
 
 					// Find the controller
 					final SmartController controller = Main.searchWindowSmartController;
@@ -148,7 +149,7 @@ public class MediaUpdaterService {
 						// Or else check more through
 						else {
 							// For player 0
-							if (xPlayerController.getKey() == 0 && Main.topBar.getWindowMode() == WindowMode.MAINMODE)
+							if (xPlayerController.getKey() == 0 && MainLoader.getTopBar().getWindowMode() == WindowMode.MAINMODE)
 								return true;
 							// For other players
 							else return xPlayerController.getKey() != 0
@@ -160,7 +161,7 @@ public class MediaUpdaterService {
 					.forEach(xPlayerController -> {
 
 						// Fix the emotion image
-						xPlayerController.changeEmotionImage(Main.emotionListsController
+						xPlayerController.changeEmotionImage(MainLoader.getEmotionListsController()
 								.getEmotionForMedia(xPlayerController.xPlayerModel.songPathProperty().get()));
 
 						// Only if the Settings Mode is selected
@@ -183,7 +184,7 @@ public class MediaUpdaterService {
 			// --
 
 			// Don't enter in case of
-			if ((Main.topBar.getWindowMode() == WindowMode.MAINMODE
+			if ((MainLoader.getTopBar().getWindowMode() == WindowMode.MAINMODE
 					|| Main.libraryMode.getDjModeStackPane().isVisible())
 					&& Main.playListModesTabPane.getEmotionListsTab().isSelected())
 				// Filter Emotion Lists Normal Mode TableViews
@@ -239,7 +240,7 @@ public class MediaUpdaterService {
 
 			// Check the settings
 			final int mode = JavaFXTool.getIndexOfSelectedToggle(
-					Main.settingsWindow.getPlayListsSettingsController().getPlayedFilesDetectionGroup());
+					MainLoader.getSettingsWindow().getPlayListsSettingsController().getPlayedFilesDetectionGroup());
 
 			// For each media File of the Controller
 			observableList.stream().forEach(media -> {
@@ -276,7 +277,7 @@ public class MediaUpdaterService {
 						});
 
 				// ---------Liked or disliked--------?
-				media.changeEmotionImage(Main.emotionListsController.getEmotionForMedia(media.getFilePath()));
+				media.changeEmotionImage(MainLoader.getEmotionListsController().getEmotionForMedia(media.getFilePath()));
 
 			});
 		}

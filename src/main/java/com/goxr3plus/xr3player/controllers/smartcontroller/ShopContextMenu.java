@@ -9,6 +9,7 @@ import java.net.URLEncoder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -166,8 +167,8 @@ public class ShopContextMenu extends ContextMenu {
 		}
 
 		// Show it
-		show((Main.mediaSearchWindow.getWindow().isShowing() && Main.mediaSearchWindow.getWindow().isFocused())
-				? Main.mediaSearchWindow.getWindow()
+		show((MainLoader.getMediaSearchWindow().getWindow().isShowing() && MainLoader.getMediaSearchWindow().getWindow().isFocused())
+				? MainLoader.getMediaSearchWindow().getWindow()
 				: Main.window, x - super.getWidth(), y - 1);
 
 		// ------------Animation------------------
@@ -204,8 +205,8 @@ public class ShopContextMenu extends ContextMenu {
 	 * @param url
 	 */
 	private void openWebSite(String url) {
-		Main.webBrowser.createTabAndSelect(url);
-		Main.topBar.goMode(WindowMode.WEBMODE);
+		MainLoader.getWebBrowser().createTabAndSelect(url);
+		MainLoader.getTopBar().goMode(WindowMode.WEBMODE);
 	}
 
 	/**

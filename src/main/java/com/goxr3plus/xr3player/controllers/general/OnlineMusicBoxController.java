@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import javafx.fxml.FXML;
@@ -11,7 +12,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import com.goxr3plus.xr3player.application.Main;
 import com.goxr3plus.xr3player.controllers.general.TopBar.WindowMode;
 import com.goxr3plus.xr3player.utils.general.InfoTool;
 import com.goxr3plus.xr3player.utils.javafx.JavaFXTool;
@@ -98,8 +98,8 @@ public class OnlineMusicBoxController extends StackPane {
 
 		// Mouse Events
 		setOnMouseClicked(m -> {
-			Main.webBrowser.createTabAndSelect(url);
-			Main.topBar.goMode(WindowMode.WEBMODE);
+			MainLoader.getWebBrowser().createTabAndSelect(url);
+			MainLoader.getTopBar().goMode(WindowMode.WEBMODE);
 		});
 
 		stackLabel.visibleProperty().bind(this.hoverProperty());

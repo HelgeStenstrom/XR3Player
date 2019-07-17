@@ -14,6 +14,7 @@ import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 import java.util.logging.Level;
 
+import com.goxr3plus.xr3player.application.MainLoader;
 import org.fxmisc.richtext.InlineCssTextArea;
 
 import com.jfoenix.controls.JFXButton;
@@ -453,8 +454,8 @@ public class SmartController extends StackPane {
 
 		// settings
 		settings.setOnAction(a -> {
-			Main.settingsWindow.getPlayListsSettingsController().getInnerTabPane().getSelectionModel().select(0);
-			Main.settingsWindow.showWindow(SettingsTab.PLAYLISTS);
+			MainLoader.getSettingsWindow().getPlayListsSettingsController().getInnerTabPane().getSelectionModel().select(0);
+			MainLoader.getSettingsWindow().showWindow(SettingsTab.PLAYLISTS);
 		});
 
 		// importFolder
@@ -472,7 +473,7 @@ public class SmartController extends StackPane {
 		});
 
 		// exportFiles
-		exportFiles.setOnAction(a -> Main.exportWindow.show(this));
+		exportFiles.setOnAction(a -> MainLoader.getExportWindow().show(this));
 
 		// Export
 		// ...
@@ -627,7 +628,7 @@ public class SmartController extends StackPane {
 		if (!isFree(true))
 			return;
 
-		List<Boolean> answers = Main.mediaDeleteWindow.doDeleteQuestion(permanent,
+		List<Boolean> answers = MainLoader.getMediaDeleteWindow().doDeleteQuestion(permanent,
 				normal_mode_mediaTableViewer.getSelectedCount() != 1
 						? Integer.toString(normal_mode_mediaTableViewer.getSelectedCount())
 						: normal_mode_mediaTableViewer.getSelectionModel().getSelectedItem().getFileName(),
@@ -705,16 +706,16 @@ public class SmartController extends StackPane {
 					switch (getName()) {
 
 					case "HatedMediaPlayList":
-						Main.emotionListsController.hatedMediaList.getSet().clear();
+						MainLoader.getEmotionListsController().hatedMediaList.getSet().clear();
 						break;
 					case "DislikedMediaPlayList":
-						Main.emotionListsController.dislikedMediaList.getSet().clear();
+						MainLoader.getEmotionListsController().dislikedMediaList.getSet().clear();
 						break;
 					case "LikedMediaPlayList":
-						Main.emotionListsController.likedMediaList.getSet().clear();
+						MainLoader.getEmotionListsController().likedMediaList.getSet().clear();
 						break;
 					case "LovedMediaPlayList":
-						Main.emotionListsController.lovedMediaList.getSet().clear();
+						MainLoader.getEmotionListsController().lovedMediaList.getSet().clear();
 						break;
 					}
 
